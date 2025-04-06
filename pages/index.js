@@ -10,12 +10,12 @@ export default function Home() {
           A life tracker for your recovery, sports, and hobbies.
         </p>
         <p className="text-base text-white mt-2">
-          Steadly.app helps you track your recovery, fitness, and hobbies — all in one place.
+          Steadly.app simplifies tracking your progress, offering statistical insights like averages, modes, and graphs that can be downloaded to share or store elsewhere.
         </p>
       </div>
 
       {/* Login Form */}
-      <div className="flex flex-col gap-4 mb-10 w-full max-w-md">
+      <div className="flex flex-col gap-6 mb-10 w-full max-w-md">
         <input
           type="email"
           placeholder="Email"
@@ -26,15 +26,21 @@ export default function Home() {
           placeholder="Password"
           className="px-4 py-2 rounded-full text-black"
         />
-        <button className="bg-white text-black px-6 py-2 rounded-full shadow hover:bg-gray-200">
+        <button className="bg-blue-500 text-white px-6 py-3 rounded-full shadow hover:bg-blue-600 font-bold text-lg">
           Login
         </button>
         <p className="text-white text-center">
-          Don't have an account?{' '}
-          <Link href="/register">
-            <a className="text-blue-500">Register</a>
-          </Link>
+          Don't have an account? <Link href="/register"><a className="text-blue-500">Register</a></Link>
+          <br />
+          <Link href="/forgot-password"><a className="text-blue-500">Forgot Password?</a></Link>
         </p>
+      </div>
+
+      {/* Google Sign-In Button */}
+      <div className="flex flex-col gap-4 mb-6 w-full max-w-md mt-6">
+        <button className="bg-red-500 text-white px-6 py-3 rounded-full shadow hover:bg-red-600 font-bold text-lg">
+          Sign in with Google
+        </button>
       </div>
     </div>
   );
