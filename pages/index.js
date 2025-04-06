@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
@@ -7,7 +6,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-4">Welcome to Steadly</h1>
       <p className="text-lg mb-6 text-center text-gray-300">Track your lifts. Grow steadily. Minimalist strength training built for consistency.</p>
 
-      <Image
+      <img
         src="/images/Hyrox.avif"
         alt="Athlete training"
         width={320}
