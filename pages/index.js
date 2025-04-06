@@ -6,7 +6,8 @@ export default function Home() {
       {/* Brand + Slogan */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">steadly.app</h1>
-        <p className="text-lg text-gray-400">The easiest way to track your progress</p>
+        <p className="text-3xl font-bold text-white">A minimalist tracker for your entire training journey</p>
+<p className="text-base text-white mt-2">Whether you're lifting, swimming, or in rehab — steadly.app helps you log consistently, reflect easily, and build insights over time.</p>
       </div>
 
       {/* CTA Buttons */}
