@@ -10,7 +10,7 @@ export default function Home() {
           A life tracker for your recovery, sports, and hobbies.
         </p>
         <p className="text-base text-white mt-2">
-          Steadly.app simplifies tracking your progress, offering statistical insights like averages, modes, and graphs that can be downloaded to share or store elsewhere.
+          Steadly.app simplifies tracking your progress, offering statistical data that can be downloaded to share or store elsewhere.
         </p>
       </div>
 
@@ -26,7 +26,7 @@ export default function Home() {
           placeholder="Password"
           className="px-4 py-2 rounded-full text-black"
         />
-        <button className="bg-blue-500 text-white px-6 py-3 rounded-full shadow hover:bg-blue-600 font-bold text-lg">
+        <button className="bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-200 font-bold text-lg">
           Login
         </button>
         <p className="text-white text-center">
@@ -38,7 +38,7 @@ export default function Home() {
 
       {/* Google Sign-In Button */}
       <div className="flex flex-col gap-4 mb-6 w-full max-w-md mt-6">
-        <button className="bg-red-500 text-white px-6 py-3 rounded-full shadow hover:bg-red-600 font-bold text-lg">
+        <button className="bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-200 font-bold text-lg">
           Sign in with Google
         </button>
       </div>
