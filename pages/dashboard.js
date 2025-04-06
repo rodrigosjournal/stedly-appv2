@@ -136,8 +136,8 @@ export default function Dashboard() {
         </button>
       </div>
 
-      <div className="max-w-md mx-auto mt-6">
-        <h2 className="text-xl font-semibold mb-3">Logged Workouts</h2>
+      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <h2 className="text-xl font-semibold mb-3 lg:col-span-2">Logged Workouts</h2>
         {workouts.length === 0 ? (
           <p className="text-gray-400">No workouts logged yet.</p>
         ) : (
