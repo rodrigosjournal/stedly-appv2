@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [note, setNote] = useState('');
   const [rpe, setRpe] = useState('');
   const [workouts, setWorkouts] = useState([]);
+  const [lastWorkout, setLastWorkout] = useState(null);
   const [showToast, setShowToast] = useState(false);
 
   const workoutsRef = collection(db, 'workouts');
@@ -29,11 +30,12 @@ export default function Dashboard() {
     const snapshot = await getDocs(q);
     const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setWorkouts(data);
+    if (data.length > 0) setLastWorkout(data[0]);
   };
 
   const handleAddWorkout = async () => {
     if (!exercise || !sets || !repetitions || !weight || !workoutDuration || !restTime) return;
-    await addDoc(workoutsRef, {
+    const newWorkout = {
       exercise,
       sets,
       repetitions,
@@ -43,7 +45,8 @@ export default function Dashboard() {
       note,
       rpe,
       createdAt: serverTimestamp(),
-    });
+    };
+    await addDoc(workoutsRef, newWorkout);
     setExercise('');
     setSets('');
     setRepetitions('');
@@ -52,6 +55,7 @@ export default function Dashboard() {
     setRestTime('');
     setNote('');
     setRpe('');
+    setLastWorkout({ ...newWorkout });
     fetchWorkouts();
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
@@ -64,6 +68,17 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Dashboard</h1>
+
+      {lastWorkout && (
+        <div className="max-w-md mx-auto mb-6 p-4 rounded-xl bg-gray-800 border-l-4 border-green-500 shadow">
+          <div className="text-sm uppercase text-gray-400 mb-1">🕓 Last Logged Workout</div>
+          <div className="font-bold text-white">{lastWorkout.exercise}</div>
+          <div>{lastWorkout.sets} sets × {lastWorkout.repetitions} reps @ {lastWorkout.weight} kg</div>
+          {lastWorkout.rpe && <div>RPE: {lastWorkout.rpe}</div>}
+          {lastWorkout.note && <div className="italic text-gray-300">Note: {lastWorkout.note}</div>}
+        </div>
+      )}
+
       <div className="max-w-md mx-auto bg-gray-800 p-4 rounded-xl shadow">
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
