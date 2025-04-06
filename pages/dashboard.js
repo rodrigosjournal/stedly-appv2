@@ -67,6 +67,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Activity Tracker</h1>
 
       {lastWorkout && (
@@ -163,6 +164,8 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+            </div>
 
       {showToast && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-2xl shadow-lg z-50">
