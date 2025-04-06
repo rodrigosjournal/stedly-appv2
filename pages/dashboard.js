@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [note, setNote] = useState('');
   const [rpe, setRpe] = useState('');
   const [workouts, setWorkouts] = useState([]);
+  const [showToast, setShowToast] = useState(false);
 
   const workoutsRef = collection(db, 'workouts');
 
@@ -52,6 +53,8 @@ export default function Dashboard() {
     setNote('');
     setRpe('');
     fetchWorkouts();
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   useEffect(() => {
@@ -140,6 +143,12 @@ export default function Dashboard() {
           </ul>
         )}
       </div>
+
+      {showToast && (
+        <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-2xl shadow-lg z-50">
+          ✅ Workout saved!
+        </div>
+      )}
     </div>
   );
 }
