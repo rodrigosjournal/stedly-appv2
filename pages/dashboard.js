@@ -1,25 +1,49 @@
-// pages/dashboard.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { db } from '../firebase/firebase';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp,
+  query,
+  orderBy
+} from 'firebase/firestore';
 
 export default function Dashboard() {
   const [exercise, setExercise] = useState('');
-  const [reps, setReps] = useState('');
+  const [repetitions, setRepetitions] = useState('');
   const [weight, setWeight] = useState('');
+  const [time, setTime] = useState('');
   const [workouts, setWorkouts] = useState([]);
 
-  const handleAddWorkout = () => {
-    if (!exercise || !reps || !weight) return;
-    const newWorkout = {
-      exercise,
-      reps,
-      weight,
-      date: new Date().toLocaleString(),
-    };
-    setWorkouts([newWorkout, ...workouts]);
-    setExercise('');
-    setReps('');
-    setWeight('');
+  const workoutsRef = collection(db, 'workouts');
+
+  const fetchWorkouts = async () => {
+    const q = query(workoutsRef, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setWorkouts(data);
   };
+
+  const handleAddWorkout = async () => {
+    if (!exercise || !repetitions || !weight || !time) return;
+    await addDoc(workoutsRef, {
+      exercise,
+      repetitions,
+      weight,
+      time,
+      createdAt: serverTimestamp(),
+    });
+    setExercise('');
+    setRepetitions('');
+    setWeight('');
+    setTime('');
+    fetchWorkouts();
+  };
+
+  useEffect(() => {
+    fetchWorkouts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-6">
@@ -33,15 +57,21 @@ export default function Dashboard() {
         />
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
-          placeholder="Reps"
-          value={reps}
-          onChange={(e) => setReps(e.target.value)}
+          placeholder="Repetitions"
+          value={repetitions}
+          onChange={(e) => setRepetitions(e.target.value)}
         />
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
           placeholder="Weight (kg)"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
+        />
+        <input
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          placeholder="Time (e.g. 45s, 1:30)"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
         />
         <button
           onClick={handleAddWorkout}
@@ -57,14 +87,14 @@ export default function Dashboard() {
           <p className="text-gray-400">No workouts logged yet.</p>
         ) : (
           <ul className="space-y-3">
-            {workouts.map((w, i) => (
+            {workouts.map((w) => (
               <li
-                key={i}
+                key={w.id}
                 className="bg-gray-800 p-3 rounded-xl shadow border border-gray-700"
               >
                 <div className="font-bold">{w.exercise}</div>
-                <div>{w.reps} reps @ {w.weight} kg</div>
-                <div className="text-sm text-gray-400">{w.date}</div>
+                <div>{w.repetitions} repetitions @ {w.weight} kg</div>
+                <div>Time: {w.time}</div>
               </li>
             ))}
           </ul>
