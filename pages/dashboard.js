@@ -79,7 +79,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="max-w-md mx-auto bg-gray-900 p-4 rounded-xl shadow">
+      <div className="w-full bg-gray-900 p-4 rounded-xl shadow">
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Exercise"
