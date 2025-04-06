@@ -152,7 +152,12 @@ export default function Dashboard() {
                 <div>Workout Duration: {w.workoutDuration} min</div>
                 <div>Rest Time: {w.restTime}</div>
                 {w.rpe && <div className="text-gray-300">RPE: {w.rpe}</div>}
-                {w.note && <div className="italic text-gray-300 mt-1">Note: {w.note}</div>}
+                {w.note && <div className="italic text-gray-300">Note: {w.note}</div>}
+                {w.createdAt && (
+                  <div className="text-sm text-gray-500 mt-1">
+                    Logged on: {new Date(w.createdAt.seconds * 1000).toLocaleString()}
+                  </div>
+                )}
               </li>
             ))}
           </ul>
