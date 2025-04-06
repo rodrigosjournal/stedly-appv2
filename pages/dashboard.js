@@ -1,3 +1,4 @@
+// pages/dashboard.js
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/firebase';
 import {
@@ -11,9 +12,13 @@ import {
 
 export default function Dashboard() {
   const [exercise, setExercise] = useState('');
+  const [sets, setSets] = useState('');
   const [repetitions, setRepetitions] = useState('');
   const [weight, setWeight] = useState('');
-  const [time, setTime] = useState('');
+  const [workoutDuration, setWorkoutDuration] = useState('');
+  const [restTime, setRestTime] = useState('');
+  const [note, setNote] = useState('');
+  const [rpe, setRpe] = useState('');
   const [workouts, setWorkouts] = useState([]);
 
   const workoutsRef = collection(db, 'workouts');
@@ -26,18 +31,26 @@ export default function Dashboard() {
   };
 
   const handleAddWorkout = async () => {
-    if (!exercise || !repetitions || !weight || !time) return;
+    if (!exercise || !sets || !repetitions || !weight || !workoutDuration || !restTime) return;
     await addDoc(workoutsRef, {
       exercise,
+      sets,
       repetitions,
       weight,
-      time,
+      workoutDuration,
+      restTime,
+      note,
+      rpe,
       createdAt: serverTimestamp(),
     });
     setExercise('');
+    setSets('');
     setRepetitions('');
     setWeight('');
-    setTime('');
+    setWorkoutDuration('');
+    setRestTime('');
+    setNote('');
+    setRpe('');
     fetchWorkouts();
   };
 
@@ -57,6 +70,12 @@ export default function Dashboard() {
         />
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          placeholder="Sets"
+          value={sets}
+          onChange={(e) => setSets(e.target.value)}
+        />
+        <input
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
           placeholder="Repetitions"
           value={repetitions}
           onChange={(e) => setRepetitions(e.target.value)}
@@ -69,9 +88,27 @@ export default function Dashboard() {
         />
         <input
           className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
-          placeholder="Time (e.g. 45s, 1:30)"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
+          placeholder="Workout Duration (min)"
+          value={workoutDuration}
+          onChange={(e) => setWorkoutDuration(e.target.value)}
+        />
+        <input
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          placeholder="Rest Time (e.g. 60s, 90s)"
+          value={restTime}
+          onChange={(e) => setRestTime(e.target.value)}
+        />
+        <input
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          placeholder="RPE (1-10, optional)"
+          value={rpe}
+          onChange={(e) => setRpe(e.target.value)}
+        />
+        <textarea
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          placeholder="Note (optional)"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
         />
         <button
           onClick={handleAddWorkout}
@@ -93,8 +130,11 @@ export default function Dashboard() {
                 className="bg-gray-800 p-3 rounded-xl shadow border border-gray-700"
               >
                 <div className="font-bold">{w.exercise}</div>
-                <div>{w.repetitions} repetitions @ {w.weight} kg</div>
-                <div>Time: {w.time}</div>
+                <div>{w.sets} sets, {w.repetitions} repetitions @ {w.weight} kg</div>
+                <div>Workout Duration: {w.workoutDuration} min</div>
+                <div>Rest Time: {w.restTime}</div>
+                {w.rpe && <div className="text-gray-300">RPE: {w.rpe}</div>}
+                {w.note && <div className="italic text-gray-300 mt-1">Note: {w.note}</div>}
               </li>
             ))}
           </ul>
