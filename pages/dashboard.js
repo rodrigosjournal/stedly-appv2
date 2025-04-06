@@ -66,11 +66,11 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Dashboard</h1>
+    <div className="min-h-screen bg-black text-white px-4 py-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Activity Tracker</h1>
 
       {lastWorkout && (
-        <div className="max-w-md mx-auto mb-6 p-4 rounded-xl bg-gray-800 border-l-4 border-green-500 shadow">
+        <div className="max-w-md mx-auto mb-6 p-4 rounded-xl bg-gray-900 border-l-4 border-green-500 shadow">
           <div className="text-sm uppercase text-gray-400 mb-1">🕓 Last Logged Workout</div>
           <div className="font-bold text-white">{lastWorkout.exercise}</div>
           <div>{lastWorkout.sets} sets × {lastWorkout.repetitions} reps @ {lastWorkout.weight} kg</div>
@@ -79,51 +79,51 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="max-w-md mx-auto bg-gray-800 p-4 rounded-xl shadow">
+      <div className="max-w-md mx-auto bg-gray-900 p-4 rounded-xl shadow">
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Exercise"
           value={exercise}
           onChange={(e) => setExercise(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Sets"
           value={sets}
           onChange={(e) => setSets(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Repetitions"
           value={repetitions}
           onChange={(e) => setRepetitions(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Weight (kg)"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Workout Duration (min)"
           value={workoutDuration}
           onChange={(e) => setWorkoutDuration(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Rest Time (e.g. 60s, 90s)"
           value={restTime}
           onChange={(e) => setRestTime(e.target.value)}
         />
         <input
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="RPE (1-10, optional)"
           value={rpe}
           onChange={(e) => setRpe(e.target.value)}
         />
         <textarea
-          className="w-full mb-3 px-3 py-2 rounded bg-gray-700 text-white"
+          className="w-full mb-3 px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400"
           placeholder="Note (optional)"
           value={note}
           onChange={(e) => setNote(e.target.value)}
@@ -141,26 +141,26 @@ export default function Dashboard() {
         {workouts.length === 0 ? (
           <p className="text-gray-400">No workouts logged yet.</p>
         ) : (
-          <ul className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {workouts.map((w) => (
-              <li
+              <div
                 key={w.id}
-                className="bg-gray-800 p-3 rounded-xl shadow border border-gray-700"
+                className="bg-gray-900 p-3 rounded-xl shadow border border-gray-800"
               >
-                <div className="font-bold">{w.exercise}</div>
+                <div className="font-bold text-white">{w.exercise}</div>
                 <div>{w.sets} sets, {w.repetitions} repetitions @ {w.weight} kg</div>
-                <div>Workout Duration: {w.workoutDuration} min</div>
-                <div>Rest Time: {w.restTime}</div>
-                {w.rpe && <div className="text-gray-300">RPE: {w.rpe}</div>}
-                {w.note && <div className="italic text-gray-300">Note: {w.note}</div>}
+                <div className="text-gray-300">Workout Duration: {w.workoutDuration} min</div>
+                <div className="text-gray-300">Rest Time: {w.restTime}</div>
+                {w.rpe && <div className="text-gray-400">RPE: {w.rpe}</div>}
+                {w.note && <div className="italic text-gray-400 mt-1">Note: {w.note}</div>}
                 {w.createdAt && (
                   <div className="text-sm text-gray-500 mt-1">
                     Logged on: {new Date(w.createdAt.seconds * 1000).toLocaleString()}
                   </div>
                 )}
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
 
