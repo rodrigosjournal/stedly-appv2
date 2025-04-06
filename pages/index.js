@@ -8,7 +8,7 @@ export default function Home() {
       <p className="text-lg mb-6 text-center text-gray-300">Track your lifts. Grow steadily. Minimalist strength training built for consistency.</p>
 
       <Image
-        src="/images/MathiasHyrox.avif"
+        src="/images/Hyrox.avif"
         alt="Athlete training"
         width={320}
         height={480}
