@@ -18,14 +18,18 @@ const Dashboard = () => {
     const fetchWorkouts = async () => {
       const user = auth.currentUser;
       if (user) {
+        console.log('User is authenticated:', user.uid); // Debugging line
         const q = query(collection(db, 'workouts'), where('userId', '==', user.uid));
         try {
           const querySnapshot = await getDocs(q);
           const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          console.log('Fetched workouts:', data); // Debugging line
           setWorkouts(data);
         } catch (error) {
           console.error('Error fetching workouts:', error);
         }
+      } else {
+        console.log('User is not authenticated'); // Debugging line
       }
     };
     fetchWorkouts();
@@ -129,27 +133,31 @@ const Dashboard = () => {
 
       {/* Display Workouts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {workouts.map((workout) => (
-          <div key={workout.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold">{workout.exercise}</h2>
-            <p>Sets: {workout.sets}</p>
-            <p>Reps: {workout.reps}</p>
-            <p>Weight: {workout.weight} kg</p>
-            <p>Rest Time: {workout.restTime} sec</p>
-            <button
-              onClick={() => handleEdit(workout)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-full mt-4 mr-2"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => handleDelete(workout.id)}
-              className="bg-red-500 text-white px-4 py-2 rounded-full mt-4"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+        {workouts.length === 0 ? (
+          <p className="text-white">No workouts logged yet.</p>
+        ) : (
+          workouts.map((workout) => (
+            <div key={workout.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
+              <h2 className="text-xl font-semibold">{workout.exercise}</h2>
+              <p>Sets: {workout.sets}</p>
+              <p>Reps: {workout.reps}</p>
+              <p>Weight: {workout.weight} kg</p>
+              <p>Rest Time: {workout.restTime} sec</p>
+              <button
+                onClick={() => handleEdit(workout)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-full mt-4 mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(workout.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-full mt-4"
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
