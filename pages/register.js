@@ -1,32 +1,51 @@
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect to dashboard after successful login
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Store user data in Firestore (including username)
+      await setDoc(doc(db, 'users', user.uid), {
+        username: username,
+        email: user.email,
+        userId: user.uid,
+      });
+
+      // Redirect to dashboard
       router.push('/dashboard');
     } catch (error) {
-      setError('Error logging in: ' + error.message);
+      setError('Error signing up: ' + error.message);
     }
   };
 
   return (
     <div className="min-h-screen bg-black text-white font-sans flex flex-col items-center justify-center px-4 py-8 text-center">
-      <h1 className="text-3xl font-bold mb-4">Log In</h1>
+      <h1 className="text-3xl font-bold mb-4">Create Account</h1>
       {error && <p className="text-red-500">{error}</p>}
 
-      <form onSubmit={handleLogin} className="flex flex-col gap-4 w-full max-w-md">
+      <form onSubmit={handleSignUp} className="flex flex-col gap-4 w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Username"
+          className="px-4 py-2 rounded-full text-black"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <input
           type="email"
           placeholder="Email"
@@ -42,17 +61,11 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" className="bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-200">
-          Login
+          Sign Up
         </button>
       </form>
-      <p className="text-white text-center mt-4">
-        Don't have an account?{' '}
-        <a href="/sign-up" className="text-blue-500">
-          Register
-        </a>
-      </p>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;
