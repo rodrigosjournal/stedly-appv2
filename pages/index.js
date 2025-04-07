@@ -7,7 +7,7 @@ export default function Home() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">steadly.app</h1>
         <p className="text-3xl font-bold text-white">
-          A life tracker for your recovery, sports, and hobbies.
+          A life tracker for your recovery and sports.
         </p>
         <p className="text-base text-white mt-2">
           Steadly.app simplifies tracking your progress, offering statistical data that can be downloaded to share or store elsewhere.
