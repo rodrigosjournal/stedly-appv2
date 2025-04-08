@@ -7,17 +7,21 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Redirect to dashboard after successful login
-      router.push('/dashboard');
+      router.push('/dashboard'); // Redirect on success
     } catch (error) {
-      setError('Error logging in: ' + error.message);
+      setError('Login failed: ' + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,6 +37,7 @@ const Login = () => {
           className="px-4 py-2 rounded-full text-black"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
@@ -40,14 +45,20 @@ const Login = () => {
           className="px-4 py-2 rounded-full text-black"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button type="submit" className="bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-200">
-          Login
+        <button
+          type="submit"
+          className="bg-white text-black px-6 py-3 rounded-full shadow hover:bg-gray-200 disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+
       <p className="text-white text-center mt-4">
         Don't have an account?{' '}
-        <a href="/sign-up" className="text-blue-500">
+        <a href="/sign-up" className="text-blue-500 underline">
           Register
         </a>
       </p>
