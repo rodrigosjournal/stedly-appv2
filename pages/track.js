@@ -19,8 +19,9 @@ const Dashboard = () => {
     sleep: '',
     work: '',
     recovery: '',
-    movement: '',
-    exercise: ''
+    exerciseType: '',
+    exerciseFocus: '',
+    exerciseDuration: ''
   });
 
   const router = useRouter();
@@ -52,7 +53,14 @@ const Dashboard = () => {
         date: new Date().toISOString().split('T')[0],
         timestamp: new Date()
       });
-      setDailyLog({ sleep: '', work: '', recovery: '', movement: '', exercise: '' });
+      setDailyLog({
+        sleep: '',
+        work: '',
+        recovery: '',
+        exerciseType: '',
+        exerciseFocus: '',
+        exerciseDuration: ''
+      });
       fetchWorkouts(user.uid);
     } catch (err) {
       console.error('Failed to submit daily log:', err);
@@ -77,7 +85,7 @@ const Dashboard = () => {
           <h2 className="text-xl mb-6 text-white">Log Your Day</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Object.keys(dailyLog).map((key) => (
+            {['sleep', 'work', 'recovery'].map((key) => (
               <div key={key} className="p-4 bg-black border border-neutral-700 rounded-md">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
                 <input
@@ -89,6 +97,44 @@ const Dashboard = () => {
                 />
               </div>
             ))}
+
+            {/* Exercise Section */}
+            <div className="p-4 bg-black border border-neutral-700 rounded-md col-span-full">
+              <label className="block text-sm text-neutral-400 mb-2">Exercise Type</label>
+              <select
+                value={dailyLog.exerciseType}
+                onChange={(e) => setDailyLog({ ...dailyLog, exerciseType: e.target.value, exerciseFocus: '' })}
+                className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white mb-4"
+              >
+                <option value="">Select type</option>
+                <option value="aerobic">Aerobic</option>
+                <option value="anaerobic">Anaerobic</option>
+              </select>
+
+              {dailyLog.exerciseType === 'anaerobic' && (
+                <>
+                  <label className="block text-sm text-neutral-400 mb-2">Focus</label>
+                  <select
+                    value={dailyLog.exerciseFocus}
+                    onChange={(e) => setDailyLog({ ...dailyLog, exerciseFocus: e.target.value })}
+                    className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white mb-4"
+                  >
+                    <option value="">Select focus</option>
+                    <option value="upper">Upper Body</option>
+                    <option value="lower">Lower Body</option>
+                  </select>
+                </>
+              )}
+
+              <label className="block text-sm text-neutral-400 mb-2">Exercise Duration (hours)</label>
+              <input
+                type="number"
+                value={dailyLog.exerciseDuration}
+                onChange={(e) => setDailyLog({ ...dailyLog, exerciseDuration: e.target.value })}
+                placeholder="Enter duration"
+                className="w-full bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
+              />
+            </div>
           </div>
 
           <button
