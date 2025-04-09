@@ -8,7 +8,8 @@ import {
   where,
   doc,
   deleteDoc,
-  updateDoc
+  updateDoc,
+  addDoc
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -25,32 +26,44 @@ const Dashboard = () => {
 
   const router = useRouter();
 
-  // Protect route + fetch user data
+  // Protect route + fetch data
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const q = query(
-          collection(db, 'workouts'),
-          where('userId', '==', user.uid)
-        );
-
-        try {
-          const querySnapshot = await getDocs(q);
-          const data = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-          setWorkouts(data);
-        } catch (error) {
-          console.error('Error fetching workouts:', error);
-        }
+        fetchWorkouts(user.uid);
       } else {
-        router.push('/'); // Redirect if not logged in
+        router.push('/');
       }
     });
-
     return () => unsubscribe();
   }, [router]);
+
+  const fetchWorkouts = async (uid) => {
+    const q = query(collection(db, 'workouts'), where('userId', '==', uid));
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setWorkouts(data);
+  };
+
+  const handleAddWorkout = async () => {
+    try {
+      const user = auth.currentUser;
+      await addDoc(collection(db, 'workouts'), {
+        ...editData,
+        userId: user.uid
+      });
+      setEditData({
+        exercise: '',
+        sets: '',
+        reps: '',
+        weight: '',
+        restTime: '',
+      });
+      fetchWorkouts(user.uid);
+    } catch (err) {
+      console.error('Failed to add workout:', err);
+    }
+  };
 
   const handleEdit = (workout) => {
     setEditing(workout.id);
@@ -77,13 +90,8 @@ const Dashboard = () => {
         weight: '',
         restTime: '',
       });
-
-      // Refresh after saving
       const user = auth.currentUser;
-      const q = query(collection(db, 'workouts'), where('userId', '==', user.uid));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setWorkouts(data);
+      fetchWorkouts(user.uid);
     } catch (error) {
       console.error('Error updating workout:', error);
     }
@@ -102,6 +110,53 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <h1 className="text-4xl font-bold mb-6">Your Workout Logs</h1>
 
+      {/* Add New Workout */}
+      <div className="mb-8 p-4 bg-gray-800 rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Log a New Workout</h2>
+        <input
+          type="text"
+          value={editData.exercise}
+          onChange={(e) => setEditData({ ...editData, exercise: e.target.value })}
+          placeholder="Exercise"
+          className="mb-4 px-4 py-2 rounded-full w-full"
+        />
+        <input
+          type="number"
+          value={editData.sets}
+          onChange={(e) => setEditData({ ...editData, sets: e.target.value })}
+          placeholder="Sets"
+          className="mb-4 px-4 py-2 rounded-full w-full"
+        />
+        <input
+          type="number"
+          value={editData.reps}
+          onChange={(e) => setEditData({ ...editData, reps: e.target.value })}
+          placeholder="Reps"
+          className="mb-4 px-4 py-2 rounded-full w-full"
+        />
+        <input
+          type="number"
+          value={editData.weight}
+          onChange={(e) => setEditData({ ...editData, weight: e.target.value })}
+          placeholder="Weight"
+          className="mb-4 px-4 py-2 rounded-full w-full"
+        />
+        <input
+          type="number"
+          value={editData.restTime}
+          onChange={(e) => setEditData({ ...editData, restTime: e.target.value })}
+          placeholder="Rest Time (sec)"
+          className="mb-4 px-4 py-2 rounded-full w-full"
+        />
+        <button
+          onClick={handleAddWorkout}
+          className="bg-green-500 text-white px-6 py-3 rounded-full shadow hover:bg-green-600"
+        >
+          Add Workout
+        </button>
+      </div>
+
+      {/* Edit Workout */}
       {editing && (
         <div className="mb-6 p-4 bg-gray-800 rounded-lg">
           <h2 className="text-xl font-semibold mb-4">Edit Workout</h2>
@@ -149,6 +204,7 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Workout Logs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {workouts.length === 0 ? (
           <p>No workouts logged yet.</p>
