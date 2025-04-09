@@ -106,13 +106,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0D0D] text-white px-6 py-10 font-sans">
-      <h1 className="text-4xl font-bold mb-8 text-center">Anlytics</h1>
+    <div className="min-h-screen bg-[#101010] text-white px-6 py-10 font-sans">
+      <h1 className="text-4xl font-semibold mb-10 text-center tracking-tight">Stedly.app</h1>
 
-      {/* Log New Workout */}
-      <div className="max-w-3xl mx-auto mb-10 p-6 bg-[#1A1A1A] rounded-2xl shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Log a New Workout</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="max-w-3xl mx-auto mb-12 p-6 rounded-3xl bg-[#1A1A1A] shadow-xl shadow-black/20 backdrop-blur">
+        <h2 className="text-2xl mb-6 text-gray-200">Log a New Workout</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
             <input
               key={field}
@@ -120,23 +119,22 @@ const Dashboard = () => {
               value={editData[field]}
               onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              className="bg-[#2A2A2A] text-white placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition"
+              className="bg-[#262626] text-white placeholder-gray-500 px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#0A84FF] transition"
             />
           ))}
         </div>
         <button
           onClick={handleAddWorkout}
-          className="mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-6 py-3 rounded-xl transition"
+          className="mt-6 w-full bg-[#0A84FF] hover:bg-[#0060DF] text-white font-medium py-3 rounded-2xl transition"
         >
           ➕ Add Workout
         </button>
       </div>
 
-      {/* Edit Form */}
       {editing && (
-        <div className="max-w-3xl mx-auto mb-10 p-6 bg-[#1A1A1A] rounded-2xl shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Edit Workout</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="max-w-3xl mx-auto mb-12 p-6 rounded-3xl bg-[#1A1A1A] shadow-xl">
+          <h2 className="text-xl mb-4">Edit Workout</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
               <input
                 key={field}
@@ -144,41 +142,43 @@ const Dashboard = () => {
                 value={editData[field]}
                 onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                className="bg-[#2A2A2A] text-white placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+                className="bg-[#262626] text-white placeholder-gray-500 px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5AC8FA] transition"
               />
             ))}
           </div>
           <button
             onClick={saveEdit}
-            className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-xl transition"
+            className="mt-6 w-full bg-[#5AC8FA] hover:bg-[#3AAED8] text-black font-semibold py-3 rounded-2xl transition"
           >
             💾 Save Changes
           </button>
         </div>
       )}
 
-      {/* Workout Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {workouts.length === 0 ? (
-          <p className="text-center text-gray-400">No workouts logged yet.</p>
+          <p className="text-center text-gray-500">No workouts logged yet.</p>
         ) : (
           workouts.map((workout) => (
-            <div key={workout.id} className="bg-[#1F1F1F] p-6 rounded-2xl shadow-lg border border-[#2A2A2A]">
-              <h2 className="text-2xl font-semibold mb-2">{workout.exercise}</h2>
-              <p>Sets: {workout.sets}</p>
-              <p>Reps: {workout.reps}</p>
-              <p>Weight: {workout.weight} kg</p>
-              <p>Rest Time: {workout.restTime} sec</p>
-              <div className="mt-4 flex gap-2">
+            <div
+              key={workout.id}
+              className="bg-[#1C1C1E] p-6 rounded-3xl border border-[#2C2C2E] shadow-md hover:shadow-lg transition"
+            >
+              <h2 className="text-xl font-medium mb-2">{workout.exercise}</h2>
+              <p className="text-gray-300">Sets: {workout.sets}</p>
+              <p className="text-gray-300">Reps: {workout.reps}</p>
+              <p className="text-gray-300">Weight: {workout.weight} kg</p>
+              <p className="text-gray-300">Rest: {workout.restTime} sec</p>
+              <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => handleEdit(workout)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded-xl"
+                  className="bg-[#FFD60A] text-black px-4 py-2 rounded-xl font-medium"
                 >
                   ✏️ Edit
                 </button>
                 <button
                   onClick={() => handleDelete(workout.id)}
-                  className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-xl"
+                  className="bg-[#FF453A] text-white px-4 py-2 rounded-xl font-medium"
                 >
                   🗑️ Delete
                 </button>
