@@ -107,7 +107,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#0D0D0D] text-white px-6 py-10 font-sans">
-      <h1 className="text-4xl font-bold mb-8 text-center">🧠 Stedly Dashboard</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Anlytics</h1>
 
       {/* Log New Workout */}
       <div className="max-w-3xl mx-auto mb-10 p-6 bg-[#1A1A1A] rounded-2xl shadow-md">
