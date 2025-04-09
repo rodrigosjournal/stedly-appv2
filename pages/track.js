@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 const Dashboard = () => {
   const [workouts, setWorkouts] = useState([]);
   const [dailyLog, setDailyLog] = useState({
+    date: new Date().toISOString().split('T')[0],
     sleep: '',
     work: '',
     meals: '',
@@ -48,10 +49,10 @@ const Dashboard = () => {
       await addDoc(collection(db, 'workouts'), {
         ...dailyLog,
         userId: user.uid,
-        date: new Date().toISOString().split('T')[0],
         timestamp: new Date()
       });
       setDailyLog({
+        date: new Date().toISOString().split('T')[0],
         sleep: '',
         work: '',
         meals: '',
@@ -78,9 +79,17 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Daily Log Entry */}
         <div className="mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800">
-          <h2 className="text-xl mb-6 text-white">Log Your Day</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 bg-black border border-neutral-700 rounded-md">
+              <label className="block text-sm text-neutral-400 mb-2">Date</label>
+              <input
+                type="date"
+                value={dailyLog.date}
+                onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
+                className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+              />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {['sleep', 'work', 'meals'].map((key) => (
               <div key={key} className="p-4 bg-black border border-neutral-700 rounded-md">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
@@ -93,6 +102,7 @@ const Dashboard = () => {
                 />
               </div>
             ))}
+
             <div className="p-4 bg-black border border-neutral-700 rounded-md">
               <label className="block text-sm text-neutral-400 mb-2">Did you exercise today?</label>
               <div className="flex items-center space-x-4">
@@ -104,7 +114,7 @@ const Dashboard = () => {
                     onChange={() => setDailyLog({ ...dailyLog, exercised: true })}
                     className="form-radio text-white bg-black border-white"
                   />
-                  <span className="ml-2">Yes</span>
+                  <span className="ml-2">1</span>
                 </label>
                 <label className="inline-flex items-center">
                   <input
@@ -114,7 +124,7 @@ const Dashboard = () => {
                     onChange={() => setDailyLog({ ...dailyLog, exercised: false })}
                     className="form-radio text-white bg-black border-white"
                   />
-                  <span className="ml-2">No</span>
+                  <span className="ml-2">0</span>
                 </label>
               </div>
             </div>
@@ -128,7 +138,31 @@ const Dashboard = () => {
           </button>
         </div>
 
-        {/* Insights and Log remain here (unchanged) */}
+        {/* Table of logged entries */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left border border-neutral-800">
+            <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
+              <tr>
+                <th className="px-4 py-2">Date</th>
+                <th className="px-4 py-2">Sleep</th>
+                <th className="px-4 py-2">Work</th>
+                <th className="px-4 py-2">Meals</th>
+                <th className="px-4 py-2">Exercised</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workouts.map((entry) => (
+                <tr key={entry.id} className="border-b border-neutral-800">
+                  <td className="px-4 py-2 text-white">{entry.date}</td>
+                  <td className="px-4 py-2 text-white">{entry.sleep}</td>
+                  <td className="px-4 py-2 text-white">{entry.work}</td>
+                  <td className="px-4 py-2 text-white">{entry.meals}</td>
+                  <td className="px-4 py-2 text-white">{entry.exercised ? 1 : 0}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
