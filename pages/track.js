@@ -18,9 +18,8 @@ const Dashboard = () => {
   const [dailyLog, setDailyLog] = useState({
     sleep: '',
     work: '',
-    exerciseType: '',
-    exerciseFocus: '',
-    exerciseDuration: ''
+    meals: '',
+    exercised: false
   });
 
   const router = useRouter();
@@ -55,9 +54,8 @@ const Dashboard = () => {
       setDailyLog({
         sleep: '',
         work: '',
-        exerciseType: '',
-        exerciseFocus: '',
-        exerciseDuration: ''
+        meals: '',
+        exercised: false
       });
       fetchWorkouts(user.uid);
     } catch (err) {
@@ -83,7 +81,7 @@ const Dashboard = () => {
           <h2 className="text-xl mb-6 text-white">Log Your Day</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {['sleep', 'work'].map((key) => (
+            {['sleep', 'work', 'meals'].map((key) => (
               <div key={key} className="p-4 bg-black border border-neutral-700 rounded-md">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
                 <input
@@ -95,48 +93,29 @@ const Dashboard = () => {
                 />
               </div>
             ))}
-
-            {/* Exercise Section */}
-            <div className="p-4 bg-black border border-neutral-700 rounded-md col-span-full">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm text-neutral-400 mb-2">Exercise Type</label>
-                  <select
-                    value={dailyLog.exerciseType}
-                    onChange={(e) => setDailyLog({ ...dailyLog, exerciseType: e.target.value, exerciseFocus: '' })}
-                    className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
-                  >
-                    <option value="">Select type</option>
-                    <option value="aerobic">Aerobic</option>
-                    <option value="anaerobic">Anaerobic</option>
-                  </select>
-                </div>
-
-                {dailyLog.exerciseType === 'anaerobic' && (
-                  <div>
-                    <label className="block text-sm text-neutral-400 mb-2">Focus</label>
-                    <select
-                      value={dailyLog.exerciseFocus}
-                      onChange={(e) => setDailyLog({ ...dailyLog, exerciseFocus: e.target.value })}
-                      className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
-                    >
-                      <option value="">Select focus</option>
-                      <option value="upper">Upper Body</option>
-                      <option value="lower">Lower Body</option>
-                    </select>
-                  </div>
-                )}
-
-                <div>
-                  <label className="block text-sm text-neutral-400 mb-2">Duration (hours)</label>
+            <div className="p-4 bg-black border border-neutral-700 rounded-md">
+              <label className="block text-sm text-neutral-400 mb-2">Did you exercise today?</label>
+              <div className="flex items-center space-x-4">
+                <label className="inline-flex items-center">
                   <input
-                    type="number"
-                    value={dailyLog.exerciseDuration}
-                    onChange={(e) => setDailyLog({ ...dailyLog, exerciseDuration: e.target.value })}
-                    placeholder="Enter duration"
-                    className="w-full bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                    type="radio"
+                    name="exercised"
+                    checked={dailyLog.exercised === true}
+                    onChange={() => setDailyLog({ ...dailyLog, exercised: true })}
+                    className="form-radio text-white bg-black border-white"
                   />
-                </div>
+                  <span className="ml-2">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="exercised"
+                    checked={dailyLog.exercised === false}
+                    onChange={() => setDailyLog({ ...dailyLog, exercised: false })}
+                    className="form-radio text-white bg-black border-white"
+                  />
+                  <span className="ml-2">No</span>
+                </label>
               </div>
             </div>
           </div>
