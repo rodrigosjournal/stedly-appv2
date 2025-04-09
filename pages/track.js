@@ -15,10 +15,12 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 const Dashboard = () => {
   const [workouts, setWorkouts] = useState([]);
-  const [editing, setEditing] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('exercise');
-  const [editData, setEditData] = useState({
-    value: ''
+  const [dailyLog, setDailyLog] = useState({
+    sleep: '',
+    work: '',
+    recovery: '',
+    movement: '',
+    exercise: ''
   });
 
   const router = useRouter();
@@ -41,32 +43,21 @@ const Dashboard = () => {
     setWorkouts(data);
   };
 
-  const handleAddWorkout = async () => {
+  const handleDailyLogSubmit = async () => {
     try {
       const user = auth.currentUser;
       await addDoc(collection(db, 'workouts'), {
-        category: selectedCategory,
-        value: editData.value,
+        ...dailyLog,
         userId: user.uid,
+        date: new Date().toISOString().split('T')[0],
         timestamp: new Date()
       });
-      setEditData({ value: '' });
+      setDailyLog({ sleep: '', work: '', recovery: '', movement: '', exercise: '' });
       fetchWorkouts(user.uid);
     } catch (err) {
-      console.error('Failed to add entry:', err);
+      console.error('Failed to submit daily log:', err);
     }
   };
-
-  const handleDelete = async (id) => {
-    try {
-      await deleteDoc(doc(db, 'workouts', id));
-      setWorkouts((prev) => prev.filter((w) => w.id !== id));
-    } catch (error) {
-      console.error('Error deleting workout:', error);
-    }
-  };
-
-  const categories = ['sleep', 'work', 'recovery', 'movement', 'exercise'];
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -81,39 +72,30 @@ const Dashboard = () => {
       </nav>
 
       <div className="px-6 py-10 max-w-6xl mx-auto">
-        {/* Log Entry */}
+        {/* Daily Log Entry */}
         <div className="mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800">
-          <h2 className="text-xl mb-6 text-white">Log a New Entry</h2>
+          <h2 className="text-xl mb-6 text-white">Log Your Day</h2>
 
-          <div className="flex flex-wrap gap-3 mb-6">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-md border transition text-sm ${
-                  selectedCategory === category
-                    ? 'bg-white text-black border-white'
-                    : 'border-white text-white hover:bg-white hover:text-black'
-                }`}
-              >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Object.keys(dailyLog).map((key) => (
+              <div key={key} className="p-4 bg-black border border-neutral-700 rounded-md">
+                <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
+                <input
+                  type="number"
+                  value={dailyLog[key]}
+                  onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
+                  placeholder={`Enter ${key}`}
+                  className="w-full bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                />
+              </div>
             ))}
           </div>
 
-          <input
-            type="number"
-            value={editData.value}
-            onChange={(e) => setEditData({ value: e.target.value })}
-            placeholder={`Enter value for ${selectedCategory}`}
-            className="w-full bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
-          />
-
           <button
-            onClick={handleAddWorkout}
+            onClick={handleDailyLogSubmit}
             className="mt-6 w-full border border-white text-white hover:bg-white hover:text-black font-medium py-2 rounded-md transition"
           >
-            Add Entry
+            Log Day
           </button>
         </div>
 
