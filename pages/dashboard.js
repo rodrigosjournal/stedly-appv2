@@ -106,34 +106,20 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#101010] text-white px-6 py-10 font-sans">
-      <h1 className="text-4xl font-semibold mb-10 text-center tracking-tight">Stedly.app</h1>
-
-      <div className="max-w-3xl mx-auto mb-12 p-6 rounded-3xl bg-[#1A1A1A] shadow-xl shadow-black/20 backdrop-blur">
-        <h2 className="text-2xl mb-6 text-gray-200">Log a New Workout</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
-            <input
-              key={field}
-              type={field === 'exercise' ? 'text' : 'number'}
-              value={editData[field]}
-              onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              className="bg-[#262626] text-white placeholder-gray-500 px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#0A84FF] transition"
-            />
-          ))}
+    <div className="min-h-screen bg-black text-white font-sans">
+      {/* Navigation Bar */}
+      <nav className="bg-black border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
+        <span className="text-xl font-semibold tracking-tight">Stedly.app</span>
+        <div className="space-x-6">
+          <button className="text-white hover:text-neutral-400 transition">Dashboard</button>
+          <button className="text-white hover:text-neutral-400 transition">Workouts</button>
+          <button className="text-white hover:text-neutral-400 transition">Settings</button>
         </div>
-        <button
-          onClick={handleAddWorkout}
-          className="mt-6 w-full bg-[#0A84FF] hover:bg-[#0060DF] text-white font-medium py-3 rounded-2xl transition"
-        >
-          ➕ Add Workout
-        </button>
-      </div>
+      </nav>
 
-      {editing && (
-        <div className="max-w-3xl mx-auto mb-12 p-6 rounded-3xl bg-[#1A1A1A] shadow-xl">
-          <h2 className="text-xl mb-4">Edit Workout</h2>
+      <div className="px-6 py-10">
+        <div className="max-w-3xl mx-auto mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800">
+          <h2 className="text-xl mb-6 text-white">Log a New Workout</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
               <input
@@ -142,53 +128,68 @@ const Dashboard = () => {
                 value={editData[field]}
                 onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                className="bg-[#262626] text-white placeholder-gray-500 px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5AC8FA] transition"
+                className="bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
               />
             ))}
           </div>
           <button
-            onClick={saveEdit}
-            className="mt-6 w-full bg-[#5AC8FA] hover:bg-[#3AAED8] text-black font-semibold py-3 rounded-2xl transition"
+            onClick={handleAddWorkout}
+            className="mt-6 w-full border border-white text-white hover:bg-white hover:text-black font-medium py-2 rounded-md transition"
           >
-            💾 Save Changes
+            Add Workout
           </button>
         </div>
-      )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {workouts.length === 0 ? (
-          <p className="text-center text-gray-500">No workouts logged yet.</p>
-        ) : (
-          workouts.map((workout) => (
-            <div
-              key={workout.id}
-              className="bg-[#1C1C1E] p-6 rounded-3xl border border-[#2C2C2E] shadow-md hover:shadow-lg transition"
-            >
-              <h2 className="text-xl font-medium mb-2">{workout.exercise}</h2>
-              <p className="text-gray-300">Sets: {workout.sets}</p>
-              <p className="text-gray-300">Reps: {workout.reps}</p>
-              <p className="text-gray-300">Weight: {workout.weight} kg</p>
-              <p className="text-gray-300">Rest: {workout.restTime} sec</p>
-              <div className="flex gap-3 mt-4">
-                <button
-                  onClick={() => handleEdit(workout)}
-                  className="bg-[#FFD60A] text-black px-4 py-2 rounded-xl font-medium"
-                >
-                  ✏️ Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(workout.id)}
-                  className="bg-[#FF453A] text-white px-4 py-2 rounded-xl font-medium"
-                >
-                  🗑️ Delete
-                </button>
-              </div>
+        {editing && (
+          <div className="max-w-3xl mx-auto mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800">
+            <h2 className="text-xl mb-4">Edit Workout</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
+                <input
+                  key={field}
+                  type={field === 'exercise' ? 'text' : 'number'}
+                  value={editData[field]}
+                  onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
+                  placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                  className="bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                />
+              ))}
             </div>
-          ))
+            <button
+              onClick={saveEdit}
+              className="mt-6 w-full border border-white text-white hover:bg-white hover:text-black font-medium py-2 rounded-md transition"
+            >
+              Save Changes
+            </button>
+          </div>
         )}
-      </div>
-    </div>
-  );
-};
 
-export default Dashboard;
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {workouts.length === 0 ? (
+            <p className="text-center text-neutral-500">No workouts logged yet.</p>
+          ) : (
+            workouts.map((workout) => (
+              <div
+                key={workout.id}
+                className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 hover:border-white transition"
+              >
+                <h2 className="text-lg font-medium mb-2">{workout.exercise}</h2>
+                <p className="text-neutral-300">Sets: {workout.sets}</p>
+                <p className="text-neutral-300">Reps: {workout.reps}</p>
+                <p className="text-neutral-300">Weight: {workout.weight} kg</p>
+                <p className="text-neutral-300">Rest: {workout.restTime} sec</p>
+                <div className="flex gap-3 mt-4">
+                  <button
+                    onClick={() => handleEdit(workout)}
+                    className="border border-white text-white hover:bg-white hover:text-black px-4 py-2 rounded-md transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(workout.id)}
+                    className="border border-white text-white hover:bg-white hover:text-black px-4 py-2 rounded-md transition"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </
