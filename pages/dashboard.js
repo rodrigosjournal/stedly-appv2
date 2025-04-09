@@ -26,7 +26,6 @@ const Dashboard = () => {
 
   const router = useRouter();
 
-  // Protect route + fetch data
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -107,127 +106,81 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <h1 className="text-4xl font-bold mb-6">Your Workout Logs</h1>
+    <div className="min-h-screen bg-[#0D0D0D] text-white px-6 py-10 font-sans">
+      <h1 className="text-4xl font-bold mb-8 text-center">🧠 Stedly Dashboard</h1>
 
-      {/* Add New Workout */}
-      <div className="mb-8 p-4 bg-gray-800 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Log a New Workout</h2>
-        <input
-          type="text"
-          value={editData.exercise}
-          onChange={(e) => setEditData({ ...editData, exercise: e.target.value })}
-          placeholder="Exercise"
-          className="mb-4 px-4 py-2 rounded-full w-full"
-        />
-        <input
-          type="number"
-          value={editData.sets}
-          onChange={(e) => setEditData({ ...editData, sets: e.target.value })}
-          placeholder="Sets"
-          className="mb-4 px-4 py-2 rounded-full w-full"
-        />
-        <input
-          type="number"
-          value={editData.reps}
-          onChange={(e) => setEditData({ ...editData, reps: e.target.value })}
-          placeholder="Reps"
-          className="mb-4 px-4 py-2 rounded-full w-full"
-        />
-        <input
-          type="number"
-          value={editData.weight}
-          onChange={(e) => setEditData({ ...editData, weight: e.target.value })}
-          placeholder="Weight"
-          className="mb-4 px-4 py-2 rounded-full w-full"
-        />
-        <input
-          type="number"
-          value={editData.restTime}
-          onChange={(e) => setEditData({ ...editData, restTime: e.target.value })}
-          placeholder="Rest Time (sec)"
-          className="mb-4 px-4 py-2 rounded-full w-full"
-        />
+      {/* Log New Workout */}
+      <div className="max-w-3xl mx-auto mb-10 p-6 bg-[#1A1A1A] rounded-2xl shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Log a New Workout</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
+            <input
+              key={field}
+              type={field === 'exercise' ? 'text' : 'number'}
+              value={editData[field]}
+              onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+              className="bg-[#2A2A2A] text-white placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition"
+            />
+          ))}
+        </div>
         <button
           onClick={handleAddWorkout}
-          className="bg-green-500 text-white px-6 py-3 rounded-full shadow hover:bg-green-600"
+          className="mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-6 py-3 rounded-xl transition"
         >
-          Add Workout
+          ➕ Add Workout
         </button>
       </div>
 
-      {/* Edit Workout */}
+      {/* Edit Form */}
       {editing && (
-        <div className="mb-6 p-4 bg-gray-800 rounded-lg">
+        <div className="max-w-3xl mx-auto mb-10 p-6 bg-[#1A1A1A] rounded-2xl shadow-md">
           <h2 className="text-xl font-semibold mb-4">Edit Workout</h2>
-          <input
-            type="text"
-            value={editData.exercise}
-            onChange={(e) => setEditData({ ...editData, exercise: e.target.value })}
-            placeholder="Exercise"
-            className="mb-4 px-4 py-2 rounded-full w-full"
-          />
-          <input
-            type="number"
-            value={editData.sets}
-            onChange={(e) => setEditData({ ...editData, sets: e.target.value })}
-            placeholder="Sets"
-            className="mb-4 px-4 py-2 rounded-full w-full"
-          />
-          <input
-            type="number"
-            value={editData.reps}
-            onChange={(e) => setEditData({ ...editData, reps: e.target.value })}
-            placeholder="Reps"
-            className="mb-4 px-4 py-2 rounded-full w-full"
-          />
-          <input
-            type="number"
-            value={editData.weight}
-            onChange={(e) => setEditData({ ...editData, weight: e.target.value })}
-            placeholder="Weight"
-            className="mb-4 px-4 py-2 rounded-full w-full"
-          />
-          <input
-            type="number"
-            value={editData.restTime}
-            onChange={(e) => setEditData({ ...editData, restTime: e.target.value })}
-            placeholder="Rest Time (sec)"
-            className="mb-4 px-4 py-2 rounded-full w-full"
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {['exercise', 'sets', 'reps', 'weight', 'restTime'].map((field) => (
+              <input
+                key={field}
+                type={field === 'exercise' ? 'text' : 'number'}
+                value={editData[field]}
+                onChange={(e) => setEditData({ ...editData, [field]: e.target.value })}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                className="bg-[#2A2A2A] text-white placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+              />
+            ))}
+          </div>
           <button
             onClick={saveEdit}
-            className="bg-blue-500 text-white px-6 py-3 rounded-full shadow hover:bg-blue-600"
+            className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-xl transition"
           >
-            Save Changes
+            💾 Save Changes
           </button>
         </div>
       )}
 
-      {/* Workout Logs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Workout Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {workouts.length === 0 ? (
-          <p>No workouts logged yet.</p>
+          <p className="text-center text-gray-400">No workouts logged yet.</p>
         ) : (
           workouts.map((workout) => (
-            <div key={workout.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
-              <h2 className="text-xl font-semibold">{workout.exercise}</h2>
+            <div key={workout.id} className="bg-[#1F1F1F] p-6 rounded-2xl shadow-lg border border-[#2A2A2A]">
+              <h2 className="text-2xl font-semibold mb-2">{workout.exercise}</h2>
               <p>Sets: {workout.sets}</p>
               <p>Reps: {workout.reps}</p>
               <p>Weight: {workout.weight} kg</p>
               <p>Rest Time: {workout.restTime} sec</p>
-              <div className="mt-4">
+              <div className="mt-4 flex gap-2">
                 <button
                   onClick={() => handleEdit(workout)}
-                  className="bg-yellow-500 text-white px-4 py-2 rounded-full mr-2"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded-xl"
                 >
-                  Edit
+                  ✏️ Edit
                 </button>
                 <button
                   onClick={() => handleDelete(workout.id)}
-                  className="bg-red-600 text-white px-4 py-2 rounded-full"
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-xl"
                 >
-                  Delete
+                  🗑️ Delete
                 </button>
               </div>
             </div>
