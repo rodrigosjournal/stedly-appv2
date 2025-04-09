@@ -109,7 +109,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* Navigation Bar */}
       <nav className="bg-black border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
-        <span className="text-xl font-semibold tracking-tight">Stedly.app</span>
+        <span className="text-xl font-semibold tracking-tight">Staedly.app</span>
         <div className="space-x-6">
           <button className="text-white hover:text-neutral-400 transition">Dashboard</button>
           <button className="text-white hover:text-neutral-400 transition">Workouts</button>
