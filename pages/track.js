@@ -29,8 +29,10 @@ const Dashboard = () => {
   const [workouts, setWorkouts] = useState([]);
   const [dailyLog, setDailyLog] = useState({
     date: new Date().toISOString().split('T')[0],
-    sleep: '',
-    work: '',
+    sleepStart: '',
+  sleepEnd: '',
+  workStart: '',
+  workEnd: '',
     meals: '',
     exercised: false
   });
@@ -118,18 +120,52 @@ const Dashboard = () => {
               />
             </div>
 
-            {['sleep', 'work', 'meals'].map((key) => (
-              <div key={key} className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
-                <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
-                <input
-                  type="number"
-                  value={dailyLog[key]}
-                  onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
-                  placeholder={`Enter ${key}`}
-                  className="w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
-                />
-              </div>
-            ))}
+            <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Sleep Start</label>
+  <input
+    type="time"
+    value={dailyLog.sleepStart}
+    onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
+    className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+  />
+</div>
+<div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Sleep End</label>
+  <input
+    type="time"
+    value={dailyLog.sleepEnd}
+    onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
+    className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+  />
+</div>
+<div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Work Start</label>
+  <input
+    type="time"
+    value={dailyLog.workStart}
+    onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
+    className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+  />
+</div>
+<div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Work End</label>
+  <input
+    type="time"
+    value={dailyLog.workEnd}
+    onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
+    className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+  />
+</div>
+<div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Meals</label>
+  <input
+    type="number"
+    value={dailyLog.meals}
+    onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
+    placeholder="Enter meals"
+    className="w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+  />
+</div>
 
             <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
   <label className="block text-sm text-neutral-400 mb-2">Exercise</label>
