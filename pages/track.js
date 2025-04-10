@@ -142,8 +142,7 @@ const Dashboard = () => {
         <div className="flex flex-col lg:flex-row lg:gap-6">
         {/* Input Form */}
         <div className="w-full lg:w-[30%] mb-10 lg:mb-0 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
-          <h2 className="text-white text-xl font-semibold mb-6">Log Daily Entry</h2>
-
+         
           <div className="space-y-6">
             <div className="flex flex-col">
               <label className="text-white mb-1">Date</label>
