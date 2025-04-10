@@ -96,6 +96,11 @@ const Dashboard = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, 'workouts', id));
+    setWorkouts(workouts.filter((entry) => entry.id !== id));
+  };
+
   const processedData = workouts.map((entry) => {
     const sleepHours = entry.sleepStart && entry.sleepEnd
       ? (new Date(`1970-01-01T${entry.sleepEnd}`) - new Date(`1970-01-01T${entry.sleepStart}`)) / (1000 * 60 * 60)
@@ -104,10 +109,16 @@ const Dashboard = () => {
       ? (new Date(`1970-01-01T${entry.workEnd}`) - new Date(`1970-01-01T${entry.workStart}`)) / (1000 * 60 * 60)
       : 0;
     return {
+      id: entry.id,
       date: entry.date,
+      sleepStart: entry.sleepStart,
+      sleepEnd: entry.sleepEnd,
       sleepHours,
+      workStart: entry.workStart,
+      workEnd: entry.workEnd,
       workHours,
-      meals: entry.meals
+      meals: entry.meals,
+      exercised: entry.exercised
     };
   });
 
@@ -120,9 +131,7 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Input Form */}
         <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {/* Inputs as before... */}
-          </div>
+          {/* Form contents are assumed intact */}
         </div>
 
         {/* Graph */}
@@ -154,22 +163,35 @@ const Dashboard = () => {
                   <th className="px-4 py-2">Date</th>
                   <th className="px-4 py-2">Sleep Start</th>
                   <th className="px-4 py-2">Sleep End</th>
+                  <th className="px-4 py-2">Sleep Hours</th>
                   <th className="px-4 py-2">Work Start</th>
                   <th className="px-4 py-2">Work End</th>
+                  <th className="px-4 py-2">Work Hours</th>
                   <th className="px-4 py-2">Meals</th>
                   <th className="px-4 py-2">Exercised</th>
+                  <th className="px-4 py-2">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {workouts.map((entry) => (
+                {processedData.map((entry) => (
                   <tr key={entry.id} className="border-b border-neutral-800">
                     <td className="px-4 py-2 text-white">{entry.date}</td>
                     <td className="px-4 py-2 text-white">{entry.sleepStart}</td>
                     <td className="px-4 py-2 text-white">{entry.sleepEnd}</td>
+                    <td className="px-4 py-2 text-white">{entry.sleepHours.toFixed(2)}</td>
                     <td className="px-4 py-2 text-white">{entry.workStart}</td>
                     <td className="px-4 py-2 text-white">{entry.workEnd}</td>
+                    <td className="px-4 py-2 text-white">{entry.workHours.toFixed(2)}</td>
                     <td className="px-4 py-2 text-white">{entry.meals}</td>
                     <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => handleDelete(entry.id)}
+                        className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:text-black transition"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
