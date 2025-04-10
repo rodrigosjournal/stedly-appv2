@@ -128,7 +128,7 @@ const Dashboard = () => {
             <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1 flex items-end">
   <button
                 onClick={handleDailyLogSubmit}
-                className="w-full bg-[#1a1a1a] border border-neutral-700 text-white hover:border-white hover:text-white font-medium py-2 rounded-md transition"
+                className="w-full h-full bg-black border border-neutral-800 text-white hover:border-white hover:text-white font-medium rounded-md transition flex items-center justify-center"
               >
                 Submit
               </button>
