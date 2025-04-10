@@ -91,14 +91,14 @@ const Dashboard = () => {
             </div>
 
             {['sleep', 'work', 'meals'].map((key) => (
-              <div key={key} className="p-4 bg-black border border-neutral-800 rounded-md col-span-1\">
+              <div key={key} className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
                 <input
                   type="number"
                   value={dailyLog[key]}
                   onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
                   placeholder={`Enter ${key}`}
-                  className=\"w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white\"
+                  className="w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
                 />
               </div>
             ))}
