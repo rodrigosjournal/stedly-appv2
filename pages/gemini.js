@@ -176,9 +176,9 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Heatmap */}
-            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full">
-              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
+           {/* Rotated Heatmap */}
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full overflow-auto">
+              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
               <CalendarHeatmap
                 startDate={startOfYear}
                 endDate={endOfYear}
@@ -187,21 +187,21 @@ const Dashboard = () => {
                   if (!value || value.count === 0) return 'color-empty';
                   return 'color-filled';
                 }}
-                showWeekdayLabels={false}
+                showWeekdayLabels={true}
                 gutterSize={2}
-                horizontal={true}
-                startWeekOn={1} // 0 = Sunday, 1 = Monday
+                horizontal={false} // vertical layout
+                startWeekOn={1} // week starts on Monday
               />
               <style jsx global>{`
                 .react-calendar-heatmap text {
                   font-size: 8px;
                 }
                 .react-calendar-heatmap rect {
-                  rx: 3px;
-                  ry: 3px;
+                  rx: 2px;
+                  ry: 2px;
                 }
                 .color-empty {
-                  fill:  #000000 !important;
+                  fill: #000 !important;
                 }
                 .color-filled {
                   fill: #22c55e;
