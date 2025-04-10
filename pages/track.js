@@ -24,6 +24,9 @@ import {
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
+
 const Dashboard = () => {
   const [editId, setEditId] = useState(null);
   const [workouts, setWorkouts] = useState([]);
