@@ -78,7 +78,7 @@ const Dashboard = () => {
 
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Daily Log Entry */}
-        <div className="mb-12 p-6 rounded-xl bg-[#1a1a1a] border border-neutral-700 w-full">
+        <div className="mb-12 p-6 rounded-xl bg-[black] border border-neutral-700 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
               <label className="block text-sm text-neutral-400 mb-2">Date</label>
@@ -103,31 +103,27 @@ const Dashboard = () => {
               </div>
             ))}
 
-            <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
-              <label className="block text-sm text-neutral-400 mb-2">Did you exercise today?</label>
-              <div className="flex items-center space-x-4">
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="exercised"
-                    checked={dailyLog.exercised === true}
-                    onChange={() => setDailyLog({ ...dailyLog, exercised: true })}
-                    className="form-radio text-white bg-black border-white"
-                  />
-                  <span className="ml-2">1</span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    name="exercised"
-                    checked={dailyLog.exercised === false}
-                    onChange={() => setDailyLog({ ...dailyLog, exercised: false })}
-                    className="form-radio text-white bg-black border-white"
-                  />
-                  <span className="ml-2">0</span>
-                </label>
-              </div>
-            </div>
+            <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+  <label className="block text-sm text-neutral-400 mb-2">Exercise</label>
+  <div className="flex justify-between gap-2">
+    <button
+      onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
+      className={`w-full py-2 rounded-md text-white border transition ${
+        dailyLog.exercised ? 'bg-white text-black border-white' : 'bg-black border-neutral-700'
+      }`}
+    >
+      Yes
+    </button>
+    <button
+      onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
+      className={`w-full py-2 rounded-md text-white border transition ${
+        !dailyLog.exercised ? 'bg-white text-black border-white' : 'bg-black border-neutral-700'
+      }`}
+    >
+      No
+    </button>
+  </div>
+</div>
 
             <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1 flex items-end">
   <button
@@ -159,7 +155,7 @@ const Dashboard = () => {
                   <td className="px-4 py-2 text-white">{entry.sleep}</td>
                   <td className="px-4 py-2 text-white">{entry.work}</td>
                   <td className="px-4 py-2 text-white">{entry.meals}</td>
-                  <td className="px-4 py-2 text-white">{entry.exercised ? 1 : 0}</td>
+                  <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
                 </tr>
               ))}
             </tbody>
