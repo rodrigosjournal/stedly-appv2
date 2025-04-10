@@ -72,8 +72,10 @@ const Dashboard = () => {
         return;
       }
 
-              await addDoc(collection(db, 'workouts'), {
-          ...dailyLog,
+                    }
+
+      await addDoc(collection(db, 'workouts'), {
+        ...dailyLog,
           userId: user.uid,
         });
       setDailyLog({
