@@ -175,6 +175,60 @@ const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
               </div>
             </div>
 
+
+
+            {/* Heatmap with Nivo */}
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full h-[500px]">
+              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Binary Matrix (2025)</h2>
+              <ResponsiveHeatMap
+                data={heatmapData}
+                keys={Array.from({ length: 31 }, (_, i) => String(i + 1))}
+                indexBy="month"
+                margin={{ top: 20, right: 10, bottom: 20, left: 60 }}
+                colors={({ value }) => (value === 1 ? '#22c55e' : value === 0 ? '#0a0a0a' : '#1f2937')}
+                cellOpacity={1}
+                cellBorderColor="#111827"
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{ tickSize: 0, tickPadding: 5, tickRotation: 0 }}
+                axisLeft={{ tickSize: 0, tickPadding: 5 }}
+                labelTextColor="#9ca3af"
+                animate={false}
+                enableLabels={false}
+              />
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
            {/* Rotated Heatmap */}
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full overflow-auto">
               <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
