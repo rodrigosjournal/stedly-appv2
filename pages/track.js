@@ -137,8 +137,106 @@ const Dashboard = () => {
                 <Line type="monotone" dataKey="meals" stroke="#F59E0B" strokeWidth={2} dot={false} name="Meals" />
               </LineChart>
             </ResponsiveContainer>
-          </div>
-        </div>
+</div>
+</div>
+
+{/* Download Button */}
+<div className="flex justify-end mb-4">
+  <button
+    onClick={() => {
+      const worksheet = XLSX.utils.json_to_sheet(
+        workouts.map(({ date, sleepStart, sleepEnd, workStart, workEnd, meals, exercised }) => {
+          const sleepHours = sleepStart && sleepEnd ? (new Date(`1970-01-01T${sleepEnd}`) - new Date(`1970-01-01T${sleepStart}`)) / (1000 * 60 * 60) : '';
+          const workHours = workStart && workEnd ? (new Date(`1970-01-01T${workEnd}`) - new Date(`1970-01-01T${workStart}`)) / (1000 * 60 * 60) : '';
+          return {
+            Date: date,
+            'Sleep Start': sleepStart,
+            'Sleep End': sleepEnd,
+            'Sleep Hours': sleepHours,
+            'Work Start': workStart,
+            'Work End': workEnd,
+            'Work Hours': workHours,
+            Meals: meals,
+            Exercised: exercised ? 'Yes' : 'No'
+          };
+        })
+      );
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Daily Logs');
+      XLSX.writeFile(workbook, 'steadly_logs.xlsx');
+    }}
+    className="px-4 py-2 border border-neutral-800 rounded-md text-white hover:border-white transition"
+  >
+    Download Excel
+  </button>
+</div>
+
+{/* Table of logged entries */}
+<div className="overflow-x-auto">
+  <table className="w-full text-sm text-left border border-neutral-800">
+    <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
+      <tr>
+        <th className="px-4 py-2">Date</th>
+        <th className="px-4 py-2">Sleep Start</th>
+        <th className="px-4 py-2">Sleep End</th>
+        <th className="px-4 py-2">Sleep Hours</th>
+        <th className="px-4 py-2">Work Start</th>
+        <th className="px-4 py-2">Work End</th>
+        <th className="px-4 py-2">Work Hours</th>
+        <th className="px-4 py-2">Meals</th>
+        <th className="px-4 py-2">Exercised</th>
+        <th className="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {workouts.map((entry) => {
+        const sleepHours = entry.sleepStart && entry.sleepEnd ? (new Date(`1970-01-01T${entry.sleepEnd}`) - new Date(`1970-01-01T${entry.sleepStart}`)) / (1000 * 60 * 60) : '';
+        const workHours = entry.workStart && entry.workEnd ? (new Date(`1970-01-01T${entry.workEnd}`) - new Date(`1970-01-01T${entry.workStart}`)) / (1000 * 60 * 60) : '';
+        return (
+          <tr key={entry.id} className="border-b border-neutral-800">
+            <td className="px-4 py-2 text-white">{entry.date}</td>
+            <td className="px-4 py-2 text-white">{entry.sleepStart || '-'}</td>
+            <td className="px-4 py-2 text-white">{entry.sleepEnd || '-'}</td>
+            <td className="px-4 py-2 text-white">{sleepHours ? sleepHours.toFixed(2) : '-'}</td>
+            <td className="px-4 py-2 text-white">{entry.workStart || '-'}</td>
+            <td className="px-4 py-2 text-white">{entry.workEnd || '-'}</td>
+            <td className="px-4 py-2 text-white">{workHours ? workHours.toFixed(2) : '-'}</td>
+            <td className="px-4 py-2 text-white">{entry.meals}</td>
+            <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
+            <td className="px-4 py-2 space-x-2">
+              <button
+                onClick={() => {
+                  setDailyLog({
+                    date: entry.date,
+                    sleepStart: entry.sleepStart,
+                    sleepEnd: entry.sleepEnd,
+                    workStart: entry.workStart,
+                    workEnd: entry.workEnd,
+                    meals: entry.meals,
+                    exercised: entry.exercised
+                  });
+                  setEditId(entry.id);
+                }}
+                className="text-white border border-white rounded-md px-3 py-1 text-sm hover:bg-white hover:text-black transition"
+              >
+                Edit
+              </button>
+              <button
+                onClick={async () => {
+                  await deleteDoc(doc(db, 'workouts', entry.id));
+                  setWorkouts(prev => prev.filter(w => w.id !== entry.id));
+                }}
+                className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:text-black transition"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>
       </div>
     </div>
   );
