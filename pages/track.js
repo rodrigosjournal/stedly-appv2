@@ -131,85 +131,63 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Input Form */}
         <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full">
-          <h2 className="text-white text-xl font-semibold mb-4">Daily Log Input</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm text-neutral-400 mb-2">Date</label>
-              <input
-                type="date"
-                value={dailyLog.date}
-                onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-            </div>
-
-            {/* Sleep Section */}
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-2">Sleep</h3>
-              <label className="block text-sm text-neutral-400 mb-2">Sleep Start</label>
-              <input
-                type="time"
-                value={dailyLog.sleepStart}
-                onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-              <label className="block text-sm text-neutral-400 mt-2 mb-2">Sleep End</label>
-              <input
-                type="time"
-                value={dailyLog.sleepEnd}
-                onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-            </div>
-
-            {/* Work Section */}
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-2">Work</h3>
-              <label className="block text-sm text-neutral-400 mb-2">Work Start</label>
-              <input
-                type="time"
-                value={dailyLog.workStart}
-                onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-              <label className="block text-sm text-neutral-400 mt-2 mb-2">Work End</label>
-              <input
-                type="time"
-                value={dailyLog.workEnd}
-                onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-            </div>
-
-            {/* Meals and Exercise Section */}
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-2">Meals and Exercise</h3>
-              <label className="block text-sm text-neutral-400 mb-2">Meals</label>
-              <input
-                type="number"
-                value={dailyLog.meals}
-                onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
-                className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-              />
-              <div className="flex space-x-4 items-center mt-4">
-                <span>Exercised:</span>
-                <button
-                  onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
-                  className={`px-4 py-2 rounded-md border ${dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
-                >Yes</button>
-                <button
-                  onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
-                  className={`px-4 py-2 rounded-md border ${!dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
-                >No</button>
-              </div>
-            </div>
-
-            <div className="col-span-full">
+            <input
+              type="date"
+              value={dailyLog.date}
+              onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <input
+              type="time"
+              placeholder="Sleep Start"
+              value={dailyLog.sleepStart}
+              onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <input
+              type="time"
+              placeholder="Sleep End"
+              value={dailyLog.sleepEnd}
+              onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <input
+              type="time"
+              placeholder="Work Start"
+              value={dailyLog.workStart}
+              onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <input
+              type="time"
+              placeholder="Work End"
+              value={dailyLog.workEnd}
+              onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <input
+              type="number"
+              placeholder="Meals"
+              value={dailyLog.meals}
+              onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
+              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
+            />
+            <div className="flex space-x-4 items-center">
+              <span>Exercised:</span>
               <button
-                onClick={handleDailyLogSubmit}
-                className="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-neutral-200 w-full"
-              >Submit</button>
+                onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
+                className={`px-4 py-2 rounded-md border ${dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
+              >Yes</button>
+              <button
+                onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
+                className={`px-4 py-2 rounded-md border ${!dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
+              >No</button>
             </div>
+            <button
+              onClick={handleDailyLogSubmit}
+              className="col-span-full bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-neutral-200"
+            >Submit</button>
           </div>
         </div>
 
@@ -233,4 +211,53 @@ const Dashboard = () => {
         </div>
 
         {/* Table */}
-        <div className="mt-10 p-6
+        <div className="mt-10 p-6 rounded-xl bg-black border border-neutral-800">
+          <h2 className="text-lg font-semibold mb-4 text-white">Logged Entries</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left border border-neutral-800">
+              <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
+                <tr>
+                  <th className="px-4 py-2">Date</th>
+                  <th className="px-4 py-2">Sleep Start</th>
+                  <th className="px-4 py-2">Sleep End</th>
+                  <th className="px-4 py-2">Sleep Hours</th>
+                  <th className="px-4 py-2">Work Start</th>
+                  <th className="px-4 py-2">Work End</th>
+                  <th className="px-4 py-2">Work Hours</th>
+                  <th className="px-4 py-2">Meals</th>
+                  <th className="px-4 py-2">Exercised</th>
+                  <th className="px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {processedData.map((entry) => (
+                  <tr key={entry.id} className="border-b border-neutral-800">
+                    <td className="px-4 py-2 text-white">{entry.date}</td>
+                    <td className="px-4 py-2 text-white">{entry.sleepStart}</td>
+                    <td className="px-4 py-2 text-white">{entry.sleepEnd}</td>
+                    <td className="px-4 py-2 text-white">{entry.sleepHours.toFixed(2)}</td>
+                    <td className="px-4 py-2 text-white">{entry.workStart}</td>
+                    <td className="px-4 py-2 text-white">{entry.workEnd}</td>
+                    <td className="px-4 py-2 text-white">{entry.workHours.toFixed(2)}</td>
+                    <td className="px-4 py-2 text-white">{entry.meals}</td>
+                    <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => handleDelete(entry.id)}
+                        className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:text-black transition"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
