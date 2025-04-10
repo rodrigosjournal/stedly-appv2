@@ -148,21 +148,7 @@ const Dashboard = () => {
           {/* Right Column */}
           <div className="w-full lg:w-[65%] xl:w-[70%] space-y-6">
 
-            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
-              <h2 className="text-xl font-semibold mb-4 text-white">Exercise Frequency</h2>
-              <div className="overflow-x-auto max-h-32 overflow-y-hidden">
-                <CalendarHeatmap
-                  startDate={new Date(new Date().setDate(new Date().getDate() - 42))}
-                  endDate={new Date()}
-                  values={workouts.map(entry => ({ date: entry.date, count: entry.exercised ? 1 : 0 }))}
-                  classForValue={value => (!value || value.count === 0 ? 'color-empty' : 'color-scale-1')}
-                  showWeekdayLabels={true}
-                  gutterSize={3}
-                />
-              </div>
-            </div>
-
-            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
+        <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
               <h2 className="text-xl font-semibold mb-4 text-white">Daily Trends</h2>
               <div className="w-full h-80 md:h-96">
                 <ResponsiveContainer width="100%" height="100%">
@@ -179,6 +165,25 @@ const Dashboard = () => {
                 </ResponsiveContainer>
               </div>
             </div>
+
+
+
+            
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
+              <h2 className="text-xl font-semibold mb-4 text-white">Exercise Frequency</h2>
+              <div className="overflow-x-auto max-h-32 overflow-y-hidden">
+                <CalendarHeatmap
+                  startDate={new Date(new Date().setDate(new Date().getDate() - 42))}
+                  endDate={new Date()}
+                  values={workouts.map(entry => ({ date: entry.date, count: entry.exercised ? 1 : 0 }))}
+                  classForValue={value => (!value || value.count === 0 ? 'color-empty' : 'color-scale-1')}
+                  showWeekdayLabels={true}
+                  gutterSize={3}
+                />
+              </div>
+            </div>
+
+            
 
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
               <h2 className="text-xl font-semibold mb-4 text-white">Logged Entries</h2>
