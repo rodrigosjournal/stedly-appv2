@@ -1,4 +1,4 @@
-// Full updated file with GitHub-style heatmap styling and consistent layout
+// Full updated file with VisX binary heatmap
 import { useEffect, useState } from 'react';
 import {
   ResponsiveContainer,
@@ -23,8 +23,8 @@ import {
   addDoc
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import CalendarHeatmap from 'react-calendar-heatmap';
-import 'react-calendar-heatmap/dist/styles.css';
+import { HeatmapRect } from '@visx/heatmap';
+import { scaleLinear } from '@visx/scale';
 
 const Dashboard = () => {
   const [editId, setEditId] = useState(null);
@@ -94,12 +94,20 @@ const Dashboard = () => {
     return { ...entry, sleepHours: sleep, workHours: work };
   });
 
-  const heatmapValues = workouts.map(entry => ({
-    date: entry.date,
-    count: entry.exercised ? 1 : 0
-  }));
-const startOfYear = new Date('2024-12-30'); // Monday before Jan 1st, 2025
-const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
+  const data2025 = Array.from({ length: 12 }, (_, month) => {
+    const days = Array.from({ length: 31 }, (_, day) => {
+      const dateStr = `2025-${String(month + 1).padStart(2, '0')}-${String(day + 1).padStart(2, '0')}`;
+      const found = workouts.find(w => w.date === dateStr);
+      return {
+        bin: day + 1,
+        count: found ? (found.exercised ? 1 : 0) : 0,
+      };
+    });
+    return { month, bins: days };
+  });
+
+  const xScale = scaleLinear({ domain: [1, 31], range: [0, 310] });
+  const yScale = scaleLinear({ domain: [0, 11], range: [0, 240] });
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -109,7 +117,7 @@ const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
 
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:gap-8">
-
+    
      {/* Form */}
           <div className="w-full lg:w-[35%] xl:w-[30%] mb-10 lg:mb-0 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg lg:sticky lg:top-24 self-start">
             <div className="space-y-6">
@@ -177,37 +185,30 @@ const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
 
 
 
-            {/* Heatmap with Nivo */}
-            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full h-[500px]">
+     
+
+
+
+
+
+ {/* Heatmap with VisX */}
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full">
               <h2 className="text-lg font-semibold mb-4 text-white">Exercise Binary Matrix (2025)</h2>
-              <ResponsiveHeatMap
-                data={heatmapData}
-                keys={Array.from({ length: 31 }, (_, i) => String(i + 1))}
-                indexBy="month"
-                margin={{ top: 20, right: 10, bottom: 20, left: 60 }}
-                colors={({ value }) => (value === 1 ? '#22c55e' : value === 0 ? '#0a0a0a' : '#1f2937')}
-                cellOpacity={1}
-                cellBorderColor="#111827"
-                axisTop={null}
-                axisRight={null}
-                axisBottom={{ tickSize: 0, tickPadding: 5, tickRotation: 0 }}
-                axisLeft={{ tickSize: 0, tickPadding: 5 }}
-                labelTextColor="#9ca3af"
-                animate={false}
-                enableLabels={false}
-              />
+              <svg width={350} height={260}>
+                <HeatmapRect
+                  data={data2025}
+                  xScale={(d) => xScale(d.bin)}
+                  yScale={(d, i) => yScale(i)}
+                  binWidth={10}
+                  binHeight={10}
+                  rx={2}
+                  ry={2}
+                  colorScale={scaleLinear({ domain: [0, 1], range: ['#0a0a0a', '#22c55e'] })}
+                  binPadding={1}
+                  horizontal={true}
+                />
+              </svg>
             </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
