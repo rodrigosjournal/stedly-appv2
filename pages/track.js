@@ -68,7 +68,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* Navigation Bar */}
       <nav className="bg-black border-b border-neutral-800 px-6 py-4 flex items-center justify-between">
-        <span className="text-xl font-semibold tracking-tight">Stedly.app</span>
+        <span className="text-xl font-semibold tracking-tight">Steadly.app</span>
         <div className="space-x-6">
           <button className="text-white hover:text-neutral-400 transition">Dashboard</button>
           <button className="text-white hover:text-neutral-400 transition">Workouts</button>
@@ -80,7 +80,7 @@ const Dashboard = () => {
         {/* Daily Log Entry */}
         <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full max-w-none">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+            <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
               <label className="block text-sm text-neutral-400 mb-2">Date</label>
               <input
                 type="date"
@@ -129,10 +129,10 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
-              <button
+            <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1 flex items-end">
+  <button
                 onClick={handleDailyLogSubmit}
-                className="w-full bg-black border border-neutral-700 text-white hover:border-white hover:text-white font-medium py-2 rounded-md transition"
+                className="w-full bg-[#1a1a1a] border border-neutral-700 text-white hover:border-white hover:text-white font-medium py-2 rounded-md transition"
               >
                 Submit
               </button>
