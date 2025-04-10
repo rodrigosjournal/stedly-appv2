@@ -60,6 +60,10 @@ const Dashboard = () => {
   const handleDailyLogSubmit = async () => {
     try {
       const user = auth.currentUser;
+      if (!user) {
+        alert('User not logged in.');
+        return;
+      }
 
       if (editId) {
         await updateDoc(doc(db, 'workouts', editId), {
@@ -67,10 +71,14 @@ const Dashboard = () => {
           userId: user.uid,
         });
       } else {
-        const q = query(collection(db, 'workouts'), where('userId', '==', user.uid), where('date', '==', dailyLog.date));
+        const q = query(
+          collection(db, 'workouts'),
+          where('userId', '==', user.uid),
+          where('date', '==', dailyLog.date)
+        );
         const existingSnapshot = await getDocs(q);
         if (!existingSnapshot.empty) {
-          console.warn('Entry for this date already exists.');
+          alert('Entry for this date already exists.');
           return;
         }
 
@@ -80,6 +88,7 @@ const Dashboard = () => {
         });
       }
 
+      alert('Entry submitted!');
       setDailyLog({
         date: new Date().toISOString().split('T')[0],
         sleepStart: '',
@@ -93,6 +102,7 @@ const Dashboard = () => {
       fetchWorkouts(user.uid);
     } catch (err) {
       console.error('Failed to submit daily log:', err);
+      alert('Failed to submit. Check the console for more details.');
     }
   };
 
