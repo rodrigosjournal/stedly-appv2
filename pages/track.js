@@ -200,33 +200,32 @@ const Dashboard = () => {
         <div className="mt-10 p-6 rounded-xl bg-black border border-neutral-800">
   <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
   <div className="w-full h-96">
-    <ResponsiveContainer width="100%" height="100%">
-      const processedData = workouts.map((entry) => {
-  const sleepHours = entry.sleepStart && entry.sleepEnd
-    ? (new Date(`1970-01-01T${entry.sleepEnd}`) - new Date(`1970-01-01T${entry.sleepStart}`)) / (1000 * 60 * 60)
-    : 0;
-  const workHours = entry.workStart && entry.workEnd
-    ? (new Date(`1970-01-01T${entry.workEnd}`) - new Date(`1970-01-01T${entry.workStart}`)) / (1000 * 60 * 60)
-    : 0;
-  return {
-    date: entry.date,
-    meals: entry.meals,
-    sleepHours,
-    workHours,
-  };
-});
-
-<LineChart data={processedData}>
-  <CartesianGrid stroke="#222" strokeDasharray="3 3" />
-  <XAxis dataKey="date" stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
-  <YAxis stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
-  <Tooltip contentStyle={{ backgroundColor: '#0f0f0f', border: '1px solid #333', borderRadius: '6px', color: '#fff' }} labelStyle={{ color: '#aaa' }} />
-  <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#aaa' }} />
-  <Line type="monotone" dataKey="sleepHours"$1name="Sleep" />
-  <Line type="monotone" dataKey="workHours"$1name="Work" />
-  <Line type="monotone" dataKey="meals" stroke="#F59E0B" strokeWidth={2} dot={false} name="Meals" />
-</LineChart>
-    </ResponsiveContainer>
+  <ResponsiveContainer width="100%" height="100%">
+    <LineChart data={workouts.map((entry) => {
+      const sleepHours = entry.sleepStart && entry.sleepEnd
+        ? (new Date(`1970-01-01T${entry.sleepEnd}`) - new Date(`1970-01-01T${entry.sleepStart}`)) / (1000 * 60 * 60)
+        : 0;
+      const workHours = entry.workStart && entry.workEnd
+        ? (new Date(`1970-01-01T${entry.workEnd}`) - new Date(`1970-01-01T${entry.workStart}`)) / (1000 * 60 * 60)
+        : 0;
+      return {
+        date: entry.date,
+        sleepHours,
+        workHours,
+        meals: entry.meals
+      };
+    })}>
+      <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+      <XAxis dataKey="date" stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
+      <YAxis stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
+      <Tooltip contentStyle={{ backgroundColor: '#0f0f0f', border: '1px solid #333', borderRadius: '6px', color: '#fff' }} labelStyle={{ color: '#aaa' }} />
+      <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#aaa' }} />
+      <Line type="monotone" dataKey="sleepHours" stroke="#6B7280" strokeWidth={2} dot={false} name="Sleep" />
+      <Line type="monotone" dataKey="workHours" stroke="#10B981" strokeWidth={2} dot={false} name="Work" />
+      <Line type="monotone" dataKey="meals" stroke="#F59E0B" strokeWidth={2} dot={false} name="Meals" />
+    </LineChart>
+  </ResponsiveContainer>
+</div>
   </div>
 </div>
 
