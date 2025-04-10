@@ -188,7 +188,7 @@ const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
                 }}
                 showWeekdayLabels={true}
                 gutterSize={2}
-                horizontal={false} // vertical layout
+                horizontal={true} // vertical layout
                 startWeekOn={1} // week starts on Monday
               />
               <style jsx global>{`
