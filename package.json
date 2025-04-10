@@ -1,3 +1,4 @@
+
 {
   "name": "stedly",
   "version": "0.1.0",
@@ -17,6 +18,7 @@
     "firebase": "^10.8.1",
     "xlsx": "^0.18.5",
     "recharts": "^2.7.2",
-    "d3": "^7.8.5"
+    "react-calendar-heatmap": "^1.9.0"
+
   }
 }
