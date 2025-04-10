@@ -130,7 +130,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className=\"p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md lg:col-span-1\">
+          <div className=\"p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1\">
   <button
     onClick={handleDailyLogSubmit}
     className="w-full bg-black border border-neutral-700 text-white hover:border-white hover:text-white font-medium py-2 rounded-md transition"
@@ -171,4 +171,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
- 
