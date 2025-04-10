@@ -185,7 +185,10 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <button onClick={handleDailyLogSubmit} className="w-full bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-neutral-300 transition">Submit</button>
+              
+              <button onClick={handleDailyLogSubmit} className="w-full bg-black text-white px-6 py-3 rounded-xl font-semibold border border-neutral-700 hover:bg-neutral-900 transition">Submit</button>
+
+  
             </div>
           </div>
         </div>
