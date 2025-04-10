@@ -251,9 +251,9 @@ const Dashboard = () => {
     Download Excel
   </button>
 </div>
+    </div>
 
 $1
-    <div className="overflow-x-auto">
   <table className="w-full text-sm text-left border border-neutral-800">
     <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
       <tr>
@@ -317,6 +317,9 @@ $1
       })}
     </tbody>
   </table>
+</div>
+</div>
+</div>
 </div>
 
 $1
