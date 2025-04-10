@@ -252,8 +252,6 @@ const Dashboard = () => {
   </button>
 </div>
     </div>
-
-$1
   <table className="w-full text-sm text-left border border-neutral-800">
     <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
       <tr>
@@ -322,4 +320,3 @@ $1
 </div>
 </div>
 
-$1
