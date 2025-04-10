@@ -1,4 +1,4 @@
-// Full updated file with GitHub-style heatmap styling
+// Full updated file with GitHub-style heatmap styling and consistent table
 import { useEffect, useState } from 'react';
 import {
   ResponsiveContainer,
@@ -177,6 +177,38 @@ const Dashboard = () => {
                     <Line type="monotone" dataKey="meals" stroke="#F59E0B" strokeWidth={2} dot={false} name="Meals (count)" />
                   </LineChart>
                 </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
+              <h2 className="text-xl font-semibold mb-4 text-white">Logged Entries</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left border border-neutral-800">
+                  <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
+                    <tr>
+                      <th className="px-4 py-2">Date</th>
+                      <th className="px-4 py-2">Sleep</th>
+                      <th className="px-4 py-2">Work</th>
+                      <th className="px-4 py-2">Meals</th>
+                      <th className="px-4 py-2">Exercised</th>
+                      <th className="px-4 py-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {processedData.map((entry) => (
+                      <tr key={entry.id} className="border-b border-neutral-800">
+                        <td className="px-4 py-2 text-white">{entry.date}</td>
+                        <td className="px-4 py-2 text-white">{entry.sleepHours?.toFixed(1)} hrs</td>
+                        <td className="px-4 py-2 text-white">{entry.workHours?.toFixed(1)} hrs</td>
+                        <td className="px-4 py-2 text-white">{entry.meals}</td>
+                        <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
+                        <td className="px-4 py-2">
+                          <button onClick={() => handleDelete(entry.id)} className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:text-black transition">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
