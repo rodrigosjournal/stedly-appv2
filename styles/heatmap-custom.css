@@ -1,0 +1,8 @@
+/* GitHub-style binary heatmap (black = 0, green = 1) */
+.react-calendar-heatmap .color-empty {
+  fill: #000000;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #22c55e; /* Tailwind green-500 */
+}
