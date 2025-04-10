@@ -128,68 +128,121 @@ const Dashboard = () => {
         <span className="text-xl font-semibold tracking-tight">Steadly.app</span>
       </nav>
 
-      <div className="px-6 py-10 w-full max-w-7xl mx-auto">
-        {/* Input Form */}
-        <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <input
-              type="date"
-              value={dailyLog.date}
-              onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <input
-              type="time"
-              placeholder="Sleep Start"
-              value={dailyLog.sleepStart}
-              onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <input
-              type="time"
-              placeholder="Sleep End"
-              value={dailyLog.sleepEnd}
-              onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <input
-              type="time"
-              placeholder="Work Start"
-              value={dailyLog.workStart}
-              onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <input
-              type="time"
-              placeholder="Work End"
-              value={dailyLog.workEnd}
-              onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <input
-              type="number"
-              placeholder="Meals"
-              value={dailyLog.meals}
-              onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-md"
-            />
-            <div className="flex space-x-4 items-center">
-              <span>Exercised:</span>
-              <button
-                onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
-                className={`px-4 py-2 rounded-md border ${dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
-              >Yes</button>
-              <button
-                onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
-                className={`px-4 py-2 rounded-md border ${!dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white'}`}
-              >No</button>
-            </div>
-            <button
-              onClick={handleDailyLogSubmit}
-              className="col-span-full bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-neutral-200"
-            >Submit</button>
-          </div>
+    <div className="px-6 py-10 w-full max-w-4xl mx-auto">
+  {/* Input Form */}
+  <div className="mb-12 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
+    <h2 className="text-white text-xl font-semibold mb-6">Log Daily Entry</h2>
+
+    <div className="space-y-6">
+
+      {/* Date */}
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Date</label>
+        <input
+          type="date"
+          value={dailyLog.date}
+          onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
+          className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+        />
+      </div>
+
+      {/* Sleep */}
+      <div className="flex flex-col sm:flex-row sm:space-x-4">
+        <div className="flex-1 flex flex-col mb-4 sm:mb-0">
+          <label className="text-white mb-1">Sleep Start</label>
+          <input
+            type="time"
+            value={dailyLog.sleepStart}
+            onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
+            className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+          />
         </div>
+        <div className="flex-1 flex flex-col">
+          <label className="text-white mb-1">Sleep End</label>
+          <input
+            type="time"
+            value={dailyLog.sleepEnd}
+            onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
+            className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+          />
+        </div>
+      </div>
+
+      {/* Work */}
+      <div className="flex flex-col sm:flex-row sm:space-x-4">
+        <div className="flex-1 flex flex-col mb-4 sm:mb-0">
+          <label className="text-white mb-1">Work Start</label>
+          <input
+            type="time"
+            value={dailyLog.workStart}
+            onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
+            className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+          />
+        </div>
+        <div className="flex-1 flex flex-col">
+          <label className="text-white mb-1">Work End</label>
+          <input
+            type="time"
+            value={dailyLog.workEnd}
+            onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
+            className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+          />
+        </div>
+      </div>
+
+      {/* Meals */}
+      <div className="flex flex-col">
+        <label className="text-white mb-1">Meals</label>
+        <input
+          type="number"
+          placeholder="e.g. 3"
+          value={dailyLog.meals}
+          onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
+          className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+        />
+      </div>
+
+      {/* Exercised */}
+      <div className="flex flex-col">
+        <label className="text-white mb-2">Exercised</label>
+        <div className="flex space-x-4">
+          <button
+            onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
+            className={`px-6 py-2 rounded-lg border font-medium transition ${
+              dailyLog.exercised
+                ? 'bg-white text-black'
+                : 'bg-black border-white text-white hover:bg-neutral-800'
+            }`}
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
+            className={`px-6 py-2 rounded-lg border font-medium transition ${
+              !dailyLog.exercised
+                ? 'bg-white text-black'
+                : 'bg-black border-white text-white hover:bg-neutral-800'
+            }`}
+          >
+            No
+          </button>
+        </div>
+      </div>
+
+      {/* Submit */}
+      <div>
+        <button
+          onClick={handleDailyLogSubmit}
+          className="w-full bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-neutral-300 transition"
+        >
+          Submit
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
         {/* Graph */}
         <div className="mt-10 p-6 rounded-xl bg-black border border-neutral-800">
