@@ -148,9 +148,9 @@ const Dashboard = () => {
           </div>
 
           {/* Right side: Heatmap + Graph */}
-          <div className="flex flex-col gap-6 w-full lg:w-[70%]">
+          <div className="flex flex-col gap-6 w-full lg:w-[70%] h-screen overflow-y-auto">
             {/* Heatmap */}
-            <div className="p-6 rounded-xl bg-black border border-neutral-800">
+            <div className="p-6 rounded-xl bg-black border border-neutral-800 flex-1">
               <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
               <CalendarHeatmap
                 startDate={new Date(new Date().setMonth(new Date().getMonth() - 2))}
@@ -163,9 +163,9 @@ const Dashboard = () => {
             </div>
 
             {/* Graph */}
-            <div className="p-6 rounded-xl bg-black border border-neutral-800">
+            <div className="p-6 rounded-xl bg-black border border-neutral-800 flex-1">
               <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
-              <div className="w-full h-[600px]">
+              <div className="w-full h-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={processedData}>
                     <CartesianGrid stroke="#222" strokeDasharray="3 3" />
