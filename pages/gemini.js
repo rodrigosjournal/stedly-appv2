@@ -162,7 +162,7 @@ const Dashboard = () => {
               <h2 className="text-xl font-semibold mb-4 text-white">Daily Trends</h2>
               <div className="w-full h-80 md:h-96">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={processedData.slice().reverse()} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                    <LineChart data={processedData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                     <CartesianGrid stroke="#374151" strokeDasharray="3 3" />
                     <XAxis dataKey="date" stroke="#9CA3AF" tickLine={false} axisLine={{ stroke: "#4B5563" }} tick={{ fontSize: 10 }} />
                     <YAxis stroke="#9CA3AF" tickLine={false} axisLine={{ stroke: "#4B5563" }} tick={{ fontSize: 10 }} />
