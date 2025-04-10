@@ -141,7 +141,10 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:gap-6">
         {/* Input Form */}
-        
+        <div className="w-full lg:w-[30%] mb-10 lg:mb-0 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
+          <h2 className="text-white text-xl font-semibold mb-6">Log Daily Entry</h2>
+
+          <div className="space-y-6">
             <div className="flex flex-col">
               <label className="text-white mb-1">Date</label>
               <input type="date" value={dailyLog.date} onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
