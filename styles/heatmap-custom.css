@@ -1,6 +1,6 @@
 /* GitHub-style binary heatmap (black = 0, green = 1) */
 .react-calendar-heatmap .color-empty {
-  fill: #000000;
+  fill: #0a0a0a;
 }
 
 .react-calendar-heatmap .color-scale-1 {
