@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import * as XLSX from 'xlsx';
 import { useRouter } from 'next/router';
 import { auth, db } from '../firebase/firebase';
 import {
@@ -108,17 +109,13 @@ const Dashboard = () => {
   <div className="flex justify-between gap-2">
     <button
       onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
-      className={`w-full py-2 rounded-md text-white border transition ${
-        dailyLog.exercised ? 'bg-white text-black border-white' : 'bg-black border-neutral-700'
-      }`}
+      className={`w-full py-2 rounded-md text-white border transition ${dailyLog.exercised ? 'bg-neutral-800 text-white border-neutral-700' : 'bg-black border-neutral-800'}`}
     >
       Yes
     </button>
     <button
       onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
-      className={`w-full py-2 rounded-md text-white border transition ${
-        !dailyLog.exercised ? 'bg-white text-black border-white' : 'bg-black border-neutral-700'
-      }`}
+      className={`w-full py-2 rounded-md text-white border transition ${!dailyLog.exercised ? 'bg-neutral-800 text-white border-neutral-700' : 'bg-black border-neutral-800'}`}
     >
       No
     </button>
@@ -137,7 +134,29 @@ const Dashboard = () => {
         </div>
 
         {/* Table of logged entries */}
-        <div className="overflow-x-auto">
+        <div className="flex justify-end mb-4">
+  <button
+    onClick={() => {
+      const worksheet = XLSX.utils.json_to_sheet(
+        workouts.map(({ date, sleep, work, meals, exercised }) => ({
+          Date: date,
+          Sleep: sleep,
+          Work: work,
+          Meals: meals,
+          Exercised: exercised ? 'Yes' : 'No'
+        }))
+      );
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Daily Logs');
+      XLSX.writeFile(workbook, 'steadly_logs.xlsx');
+    }}
+    className="px-4 py-2 border border-neutral-800 rounded-md text-white hover:border-white transition"
+  >
+    Download Excel
+  </button>
+</div>
+
+<div className="overflow-x-auto">
           <table className="w-full text-sm text-left border border-neutral-800">
             <thead className="text-neutral-400 uppercase bg-neutral-900 border-b border-neutral-800">
               <tr>
