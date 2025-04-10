@@ -193,16 +193,24 @@ const Dashboard = () => {
           </div>
         </div>
 
- {/* Exercise Frequency Heatmap */}
+{/* Exercise Frequency Heatmap */}
 <div className="w-full p-6 rounded-xl bg-black border border-neutral-800">
   <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
-  <div className="text-neutral-400 text-sm">(Calendar heatmap placeholder - coming soon)</div>
-  <div className="mt-4 h-64 bg-neutral-900 rounded-lg flex items-center justify-center border border-dashed border-neutral-700">
-    <span className="text-neutral-500">🗓️ Calendar Heatmap Component Here</span>
-  </div>
+  <CalendarHeatmap
+    startDate={new Date(new Date().setMonth(new Date().getMonth() - 2))} // last 2 months
+    endDate={new Date()}
+    values={workouts.map(entry => ({
+      date: entry.date,
+      count: entry.exercised ? 1 : 0
+    }))}
+    classForValue={(value) => {
+      if (!value || value.count === 0) return 'bg-black';
+      return 'bg-green-500';
+    }}
+    showWeekdayLabels={true}
+    gutterSize={3}
+  />
 </div>
-
-
           {/* Graph */}
 <div className="w-full lg:w-[70%] p-6 rounded-xl bg-black border border-neutral-800">
   <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
