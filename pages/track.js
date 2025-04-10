@@ -78,27 +78,27 @@ const Dashboard = () => {
 
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Daily Log Entry */}
-        <div className="mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800">
+        <div className="mb-12 p-6 rounded-xl bg-neutral-900 border border-neutral-800 w-full">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div className="p-4 bg-black border border-neutral-700 rounded-md">
+            <div className="p-4 bg-transparent border border-neutral-700 rounded-md">
               <label className="block text-sm text-neutral-400 mb-2">Date</label>
               <input
                 type="date"
                 value={dailyLog.date}
                 onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
-                className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                className="w-full bg-[#1a1a1a] border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
               />
             </div>
 
             {['sleep', 'work', 'meals'].map((key) => (
-              <div key={key} className="p-4 bg-black border border-neutral-700 rounded-md">
+              <div key={key} className="p-4 bg-transparent border border-neutral-700 rounded-md">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
                 <input
                   type="number"
                   value={dailyLog[key]}
                   onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
                   placeholder={`Enter ${key}`}
-                  className="w-full bg-black border border-neutral-700 text-white placeholder-neutral-500 px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                  className="w-full bg-[#1a1a1a] border border-neutral-700 text-white placeholder-neutral-400 px-4 py-2 rounded-md focus:outline-none focus:border-white"
                 />
               </div>
             ))}
