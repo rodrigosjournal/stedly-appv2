@@ -65,7 +65,6 @@ const Dashboard = () => {
           userId: user.uid,
         });
       } else {
-      const user = auth.currentUser;
       const q = query(collection(db, 'workouts'), where('userId', '==', user.uid), where('date', '==', dailyLog.date));
       const existingSnapshot = await getDocs(q);
       if (!existingSnapshot.empty) {
@@ -208,8 +207,8 @@ const Dashboard = () => {
                 <th className="px-4 py-2">Sleep</th>
                 <th className="px-4 py-2">Work</th>
                 <th className="px-4 py-2">Meals</th>
-                <th className=\"px-4 py-2\">Exercised</th>
-<th className=\"px-4 py-2\">Actions</th>
+                <th className="px-4 py-2">Exercised</th>
+<th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
