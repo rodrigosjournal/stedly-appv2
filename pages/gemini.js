@@ -201,7 +201,7 @@ const Dashboard = () => {
                   ry: 3px;
                 }
                 .color-empty {
-                  fill: #0a0a0a;
+                  fill: #0a0a0a !important;
                 }
                 .color-filled {
                   fill: #22c55e;
