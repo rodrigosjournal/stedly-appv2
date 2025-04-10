@@ -190,6 +190,7 @@ const Dashboard = () => {
                 showWeekdayLabels={false}
                 gutterSize={2}
                 horizontal={true}
+                startWeekOn={1} // 0 = Sunday, 1 = Monday
               />
               <style jsx global>{`
                 .react-calendar-heatmap text {
