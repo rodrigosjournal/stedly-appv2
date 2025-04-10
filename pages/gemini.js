@@ -197,11 +197,11 @@ const Dashboard = () => {
                   font-size: 8px;
                 }
                 .react-calendar-heatmap rect {
-                  rx: 2px;
-                  ry: 2px;
+                  rx: 3px;
+                  ry: 3px;
                 }
                 .color-empty {
-                  fill: #151b23;
+                  fill: #0a0a0a;
                 }
                 .color-filled {
                   fill: #22c55e;
