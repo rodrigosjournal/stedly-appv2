@@ -130,12 +130,14 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <button
-            onClick={handleDailyLogSubmit}
-            className="mt-6 w-full border border-white text-white hover:bg-white hover:text-black font-medium py-2 rounded-md transition"
-          >
-            Log Day
-          </button>
+          <div className="p-4 bg-black border border-neutral-700 rounded-md">
+  <button
+    onClick={handleDailyLogSubmit}
+    className="w-full bg-black border border-neutral-700 text-white hover:border-white hover:text-white font-medium py-2 rounded-md transition"
+  >
+    Submit
+  </button>
+</div>
         </div>
 
         {/* Table of logged entries */}
