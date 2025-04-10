@@ -111,8 +111,8 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:gap-8">
 
-          {/* Form */}
-          <div className="w-full lg:w-[30%] mb-10 lg:mb-0 p-6 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
+     {/* Form */}
+          <div className="w-full lg:w-[35%] xl:w-[30%] mb-10 lg:mb-0 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg lg:sticky lg:top-24 self-start">
             <div className="space-y-6">
               <div className="flex flex-col">
                 <label className="text-white mb-1">Date</label>
