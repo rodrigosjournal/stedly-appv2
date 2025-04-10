@@ -25,6 +25,7 @@ import {
 import { onAuthStateChanged } from 'firebase/auth';
 
 const Dashboard = () => {
+  const [editId, setEditId] = useState(null);
   const [workouts, setWorkouts] = useState([]);
   const [dailyLog, setDailyLog] = useState({
     date: new Date().toISOString().split('T')[0],
@@ -57,11 +58,25 @@ const Dashboard = () => {
   const handleDailyLogSubmit = async () => {
     try {
       const user = auth.currentUser;
-      await addDoc(collection(db, 'workouts'), {
-        ...dailyLog,
-        userId: user.uid,
-        timestamp: new Date()
-      });
+
+      if (editId) {
+        await updateDoc(doc(db, 'workouts', editId), {
+          ...dailyLog,
+          userId: user.uid,
+        });
+      } else {
+      const user = auth.currentUser;
+      const q = query(collection(db, 'workouts'), where('userId', '==', user.uid), where('date', '==', dailyLog.date));
+      const existingSnapshot = await getDocs(q);
+      if (!existingSnapshot.empty) {
+        console.warn('Entry for this date already exists.');
+        return;
+      }
+
+              await addDoc(collection(db, 'workouts'), {
+          ...dailyLog,
+          userId: user.uid,
+        });
       setDailyLog({
         date: new Date().toISOString().split('T')[0],
         sleep: '',
@@ -69,6 +84,7 @@ const Dashboard = () => {
         meals: '',
         exercised: false
       });
+      setEditId(null);
       fetchWorkouts(user.uid);
     } catch (err) {
       console.error('Failed to submit daily log:', err);
@@ -192,7 +208,8 @@ const Dashboard = () => {
                 <th className="px-4 py-2">Sleep</th>
                 <th className="px-4 py-2">Work</th>
                 <th className="px-4 py-2">Meals</th>
-                <th className="px-4 py-2">Exercised</th>
+                <th className=\"px-4 py-2\">Exercised</th>
+<th className=\"px-4 py-2\">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -203,7 +220,33 @@ const Dashboard = () => {
                   <td className="px-4 py-2 text-white">{entry.work}</td>
                   <td className="px-4 py-2 text-white">{entry.meals}</td>
                   <td className="px-4 py-2 text-white">{entry.exercised ? 'Yes' : 'No'}</td>
-                </tr>
+<td className="px-4 py-2 space-x-2">
+  <button
+    onClick={() => {
+      setDailyLog({
+        date: entry.date,
+        sleep: entry.sleep,
+        work: entry.work,
+        meals: entry.meals,
+        exercised: entry.exercised
+      });
+      setEditId(entry.id);
+    }}
+    className="text-white border border-white rounded-md px-3 py-1 text-sm hover:bg-white hover:text-black transition"
+  >
+    Edit
+  </button>
+  <button
+    onClick={async () => {
+      await deleteDoc(doc(db, 'workouts', entry.id));
+      setWorkouts(prev => prev.filter(w => w.id !== entry.id));
+    }}
+    className="text-red-500 border border-red-500 rounded-md px-3 py-1 text-sm hover:bg-red-500 hover:text-black transition"
+  >
+    Delete
+  </button>
+</td>
+</tr>
               ))}
             </tbody>
           </table>
