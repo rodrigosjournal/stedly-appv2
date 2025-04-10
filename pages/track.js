@@ -1,4 +1,14 @@
 import { useEffect, useState } from 'react';
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid
+} from 'recharts';
 import * as XLSX from 'xlsx';
 import { useRouter } from 'next/router';
 import { auth, db } from '../firebase/firebase';
@@ -134,7 +144,25 @@ const Dashboard = () => {
         </div>
 
         {/* Table of logged entries */}
-        <div className="flex justify-end mb-4">
+        <div className="mt-10 p-6 rounded-xl bg-black border border-neutral-800">
+  <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
+  <div className="w-full h-96">
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={workouts}>
+  <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+  <XAxis dataKey="date" stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
+  <YAxis stroke="#666" tickLine={false} axisLine={{ stroke: "#333" }} tick={{ fontSize: 12 }} />
+  <Tooltip contentStyle={{ backgroundColor: '#0f0f0f', border: '1px solid #333', borderRadius: '6px', color: '#fff' }} labelStyle={{ color: '#aaa' }} />
+  <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', color: '#aaa' }} />
+  <Line type="monotone" dataKey="sleep" stroke="#6B7280" strokeWidth={2} dot={false} name="Sleep" />
+  <Line type="monotone" dataKey="work" stroke="#10B981" strokeWidth={2} dot={false} name="Work" />
+  <Line type="monotone" dataKey="meals" stroke="#F59E0B" strokeWidth={2} dot={false} name="Meals" />
+</LineChart>
+    </ResponsiveContainer>
+  </div>
+</div>
+
+<div className="flex justify-end mb-4">
   <button
     onClick={() => {
       const worksheet = XLSX.utils.json_to_sheet(
