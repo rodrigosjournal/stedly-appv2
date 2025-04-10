@@ -98,9 +98,8 @@ const Dashboard = () => {
     date: entry.date,
     count: entry.exercised ? 1 : 0
   }));
-
-  const startOfYear = new Date('2025-01-01');
-  const endOfYear = new Date('2025-12-31');
+const startOfYear = new Date('2024-12-30'); // Monday before Jan 1st, 2025
+const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -178,7 +177,7 @@ const Dashboard = () => {
 
            {/* Rotated Heatmap */}
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full overflow-auto">
-              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
+              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
               <CalendarHeatmap
                 startDate={startOfYear}
                 endDate={endOfYear}
