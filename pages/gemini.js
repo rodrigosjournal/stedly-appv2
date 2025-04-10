@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+// Full updated file with GitHub-style heatmap styling and consistent layout
+import { useEffect, useState } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -22,7 +23,8 @@ import {
   addDoc
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
-import * as d3 from 'd3';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
 
 const Dashboard = () => {
   const [editId, setEditId] = useState(null);
@@ -38,7 +40,6 @@ const Dashboard = () => {
   });
 
   const router = useRouter();
-  const heatmapRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -93,31 +94,12 @@ const Dashboard = () => {
     return { ...entry, sleepHours: sleep, workHours: work };
   });
 
-  useLayoutEffect(() => {
-    if (!heatmapRef.current) return;
-    d3.select(heatmapRef.current).selectAll('*').remove();
-    const svg = d3.select(heatmapRef.current).attr('width', 365).attr('height', 160);
-    const cellSize = 10;
-
-    const start = new Date('2025-01-01');
-    const end = new Date('2025-12-31');
-    const days = d3.timeDays(start, end);
-    const dataMap = new Map(workouts.map(w => [w.date, w.exercised ? 1 : 0]));
-
-    svg.selectAll('rect')
-      .data(days)
-      .enter()
-      .append('rect')
-      .attr('width', cellSize)
-      .attr('height', cellSize)
-      .attr('x', (d, i) => Math.floor(i / 7) * (cellSize + 1))
-      .attr('y', (d, i) => (i % 7) * (cellSize + 1))
-      .attr('fill', d => {
-        const key = d.toISOString().split('T')[0];
-        const value = dataMap.get(key);
-        return value ? '#22c55e' : '#0a0a0a';
-      });
-  }, [workouts]);
+  const heatmapValues = workouts.map(entry => ({
+    date: entry.date,
+    count: entry.exercised ? 1 : 0
+  }));
+const startOfYear = new Date('2024-12-30'); // Monday before Jan 1st, 2025
+const endOfYear = new Date('2026-01-04');   // Sunday after Dec 31st, 2025
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -128,8 +110,8 @@ const Dashboard = () => {
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:gap-8">
 
-          {/* Form */}
-          <div className="w-full lg:w-[30%] mb-10 lg:mb-0 p-6 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
+     {/* Form */}
+          <div className="w-full lg:w-[35%] xl:w-[30%] mb-10 lg:mb-0 p-8 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg lg:sticky lg:top-24 self-start">
             <div className="space-y-6">
               <div className="flex flex-col">
                 <label className="text-white mb-1">Date</label>
@@ -174,19 +156,12 @@ const Dashboard = () => {
 
           {/* Right Column */}
           <div className="w-full lg:w-[70%] space-y-6">
-
-            {/* D3 Heatmap */}
-            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
-              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
-              <svg ref={heatmapRef}></svg>
-            </div>
-
             {/* Graph */}
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg">
               <h2 className="text-xl font-semibold mb-4 text-white">Daily Trends</h2>
               <div className="w-full h-80 md:h-96">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={processedData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                    <LineChart data={processedData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                     <CartesianGrid stroke="#374151" strokeDasharray="3 3" />
                     <XAxis dataKey="date" stroke="#9CA3AF" tickLine={false} axisLine={{ stroke: "#4B5563" }} tick={{ fontSize: 10 }} />
                     <YAxis stroke="#9CA3AF" tickLine={false} axisLine={{ stroke: "#4B5563" }} tick={{ fontSize: 10 }} />
@@ -198,6 +173,39 @@ const Dashboard = () => {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+            </div>
+
+           {/* Rotated Heatmap */}
+            <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full overflow-auto">
+              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
+              <CalendarHeatmap
+                startDate={startOfYear}
+                endDate={endOfYear}
+                values={heatmapValues}
+                classForValue={(value) => {
+                  if (!value || value.count === 0) return 'color-empty';
+                  return 'color-filled';
+                }}
+                showWeekdayLabels={true}
+                gutterSize={2}
+                horizontal={true} // vertical layout
+                startWeekOn={1} // week starts on Monday
+              />
+              <style jsx global>{`
+                .react-calendar-heatmap text {
+                  font-size: 8px;
+                }
+                .react-calendar-heatmap rect {
+                  rx: 2px;
+                  ry: 2px;
+                }
+                .color-empty {
+                  fill: #000 !important;
+                }
+                .color-filled {
+                  fill: #22c55e;
+                }
+              `}</style>
             </div>
 
             {/* Table */}
@@ -232,7 +240,6 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-
           </div>
         </div>
       </div>
