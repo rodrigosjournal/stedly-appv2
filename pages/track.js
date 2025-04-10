@@ -78,7 +78,7 @@ const Dashboard = () => {
 
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Daily Log Entry */}
-        <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full max-w-none">
+        <div className="mb-12 p-6 rounded-xl bg-[#1a1a1a] border border-neutral-700 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
               <label className="block text-sm text-neutral-400 mb-2">Date</label>
@@ -98,7 +98,7 @@ const Dashboard = () => {
                   value={dailyLog[key]}
                   onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
                   placeholder={`Enter ${key}`}
-                  className="w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                  className="w-full bg-[#1a1a1a] border border-neutral-700 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
                 />
               </div>
             ))}
