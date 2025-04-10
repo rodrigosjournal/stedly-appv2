@@ -1,4 +1,4 @@
-// Full updated file with GitHub-style heatmap styling and consistent table
+// Full updated file with GitHub-style heatmap styling showing full 2025 (compact layout)
 import { useEffect, useState } from 'react';
 import {
   ResponsiveContainer,
@@ -94,8 +94,45 @@ const Dashboard = () => {
     return { ...entry, sleepHours: sleep, workHours: work };
   });
 
+  const heatmapValues = workouts.map(entry => ({
+    date: entry.date,
+    count: entry.exercised ? 1 : 0
+  }));
+
+  const startOfYear = new Date('2025-01-01');
+  const endOfYear = new Date('2025-12-31');
+
   return (
-    // ... rest of the component remains unchanged
+    <div className="w-full p-6 rounded-xl bg-black border border-neutral-800">
+      <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
+      <CalendarHeatmap
+        startDate={startOfYear}
+        endDate={endOfYear}
+        values={heatmapValues}
+        classForValue={(value) => {
+          if (!value || value.count === 0) return 'color-empty';
+          return 'color-filled';
+        }}
+        showWeekdayLabels={true}
+        gutterSize={2}
+        horizontal={true}
+      />
+      <style jsx global>{`
+        .react-calendar-heatmap text {
+          font-size: 8px;
+        }
+        .react-calendar-heatmap rect {
+          rx: 2px;
+          ry: 2px;
+        }
+        .color-empty {
+          fill: #0f0f0f;
+        }
+        .color-filled {
+          fill: #22c55e;
+        }
+      `}</style>
+    </div>
   );
 };
 
