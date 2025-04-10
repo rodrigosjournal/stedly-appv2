@@ -179,7 +179,6 @@ const Dashboard = () => {
             {/* Heatmap */}
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full">
               <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
-              <p className="text-sm text-neutral-400 mb-2">{exercisedDays} days with exercise</p>
               <CalendarHeatmap
                 startDate={startOfYear}
                 endDate={endOfYear}
@@ -191,9 +190,6 @@ const Dashboard = () => {
                 showWeekdayLabels={true}
                 gutterSize={2}
                 horizontal={true}
-                tooltipDataAttrs={value => ({
-                  'data-tip': value.date ? `Exercised on ${value.date}` : ''
-                })}
               />
               <style jsx global>{`
                 .react-calendar-heatmap text {
