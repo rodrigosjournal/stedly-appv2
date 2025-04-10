@@ -197,10 +197,10 @@ const Dashboard = () => {
         </div>
 
 {/* Exercise Frequency Heatmap */}
-<div className="w-full p-6 rounded-xl bg-black border border-neutral-800">
+<div className="w-full p-6 rounded-xl bg-black border border-neutral-800 mb-6">
   <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
   <CalendarHeatmap
-    startDate={new Date(new Date().setMonth(new Date().getMonth() - 2))} // last 2 months
+    startDate={new Date(new Date().setMonth(new Date().getMonth() - 2))}
     endDate={new Date()}
     values={workouts.map(entry => ({
       date: entry.date,
@@ -214,8 +214,9 @@ const Dashboard = () => {
     gutterSize={3}
   />
 </div>
-          {/* Graph */}
-<div className="w-full lg:w-[70%] p-6 rounded-xl bg-black border border-neutral-800">
+
+{/* Graph */}
+<div className="w-full p-6 rounded-xl bg-black border border-neutral-800">
   <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
   <div className="w-full h-[600px]">
     <ResponsiveContainer width="100%" height="100%">
@@ -232,7 +233,6 @@ const Dashboard = () => {
     </ResponsiveContainer>
   </div>
 </div>
-
 
           
 
