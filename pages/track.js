@@ -86,12 +86,12 @@ const Dashboard = () => {
                 type="date"
                 value={dailyLog.date}
                 onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
-                className="w-full bg-[#1a1a1a] border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+                className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
               />
             </div>
 
             {['sleep', 'work', 'meals'].map((key) => (
-              <div key={key} className=\"p-4 bg-black border border-neutral-800 rounded-md col-span-1\">
+              <div key={key} className="p-4 bg-black border border-neutral-800 rounded-md col-span-1\">
                 <label className="block text-sm text-neutral-400 mb-2 capitalize">{key}</label>
                 <input
                   type="number"
