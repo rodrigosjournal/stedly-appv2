@@ -78,9 +78,9 @@ const Dashboard = () => {
 
       <div className="px-6 py-10 w-full max-w-7xl mx-auto">
         {/* Daily Log Entry */}
-        <div className="mb-12 p-6 rounded-xl bg-[black] border border-neutral-700 w-full">
+        <div className="mb-12 p-6 rounded-xl bg-[black] border border-neutral-800 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div className="p-4 bg-[#1a1a1a] border border-neutral-700 rounded-md col-span-1">
+            <div className="p-4 bg-black border border-neutral-700 rounded-md col-span-1">
               <label className="block text-sm text-neutral-400 mb-2">Date</label>
               <input
                 type="date"
