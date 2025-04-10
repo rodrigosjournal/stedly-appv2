@@ -17,7 +17,9 @@
     "firebase": "^10.8.1",
     "xlsx": "^0.18.5",
     "recharts": "^2.7.2",
-    "react-calendar-heatmap": "^1.9.0"
+    "react-calendar-heatmap": "^1.9.0",
+    "@nivo/heatmap": "^0.83.0",
+    "@nivo/core": "^0.83.0"
 
   }
 }
