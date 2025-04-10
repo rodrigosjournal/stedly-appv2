@@ -25,7 +25,6 @@ import {
 import { onAuthStateChanged } from 'firebase/auth';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
-import '../styles/heatmap-custom.css';
 
 const Dashboard = () => {
   const [editId, setEditId] = useState(null);
