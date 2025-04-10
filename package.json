@@ -19,7 +19,9 @@
     "recharts": "^2.7.2",
     "react-calendar-heatmap": "^1.9.0",
     "@nivo/heatmap": "^0.83.0",
-    "@nivo/core": "^0.83.0"
+    "@visx/heatmap": "^2.10.0",
+    "@visx/scale": "^2.10.0",
+    "d3-scale": "^4.0.2"
 
   }
 }
