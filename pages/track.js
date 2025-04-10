@@ -148,7 +148,7 @@ const Dashboard = () => {
           </div>
 
           {/* Right side: Heatmap + Graph */}
-          <div className="flex flex-col gap-6 w-full lg:w-[70%]">
+          <div className="flex flex-col justify-between gap-6 w-full lg:w-[70%] max-h-[90vh] overflow-auto">
             {/* Heatmap */}
             <div className="p-6 rounded-xl bg-black border border-neutral-800">
               <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
