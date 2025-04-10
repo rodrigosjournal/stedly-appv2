@@ -178,7 +178,7 @@ const Dashboard = () => {
 
             {/* Heatmap */}
             <div className="p-6 rounded-xl bg-neutral-950 border border-neutral-800 shadow-lg w-full">
-              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency (2025)</h2>
+              <h2 className="text-lg font-semibold mb-4 text-white">Exercise Frequency</h2>
               <CalendarHeatmap
                 startDate={startOfYear}
                 endDate={endOfYear}
@@ -187,7 +187,7 @@ const Dashboard = () => {
                   if (!value || value.count === 0) return 'color-empty';
                   return 'color-filled';
                 }}
-                showWeekdayLabels={true}
+                showWeekdayLabels={false}
                 gutterSize={2}
                 horizontal={true}
               />
