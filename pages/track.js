@@ -108,7 +108,93 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      <div className="px-6 py-10 w-full max-w-7xl mx-auto">
+      <div className=\"px-6 py-10 w-full max-w-7xl mx-auto\">
+
+  {/* Daily Log Entry */}
+  <div className="mb-12 p-6 rounded-xl bg-black border border-neutral-800 w-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="p-4 bg-black border border-neutral-700 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Date</label>
+        <input
+          type="date"
+          value={dailyLog.date}
+          onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })}
+          className="w-full bg-black border border-neutral-700 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Sleep Start</label>
+        <input
+          type="time"
+          value={dailyLog.sleepStart}
+          onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })}
+          className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Sleep End</label>
+        <input
+          type="time"
+          value={dailyLog.sleepEnd}
+          onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })}
+          className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Work Start</label>
+        <input
+          type="time"
+          value={dailyLog.workStart}
+          onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })}
+          className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Work End</label>
+        <input
+          type="time"
+          value={dailyLog.workEnd}
+          onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })}
+          className="w-full bg-black border border-neutral-800 text-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Meals</label>
+        <input
+          type="number"
+          value={dailyLog.meals}
+          onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })}
+          placeholder="Enter meals"
+          className="w-full bg-black border border-neutral-800 text-white placeholder-white px-4 py-2 rounded-md focus:outline-none focus:border-white"
+        />
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1">
+        <label className="block text-sm text-neutral-400 mb-2">Exercise</label>
+        <div className="flex justify-between gap-2">
+          <button
+            onClick={() => setDailyLog({ ...dailyLog, exercised: true })}
+            className={`w-full py-2 rounded-md text-white border transition ${dailyLog.exercised ? 'bg-neutral-800 text-white border-neutral-700' : 'bg-black border-neutral-800'}`}
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => setDailyLog({ ...dailyLog, exercised: false })}
+            className={`w-full py-2 rounded-md text-white border transition ${!dailyLog.exercised ? 'bg-neutral-800 text-white border-neutral-700' : 'bg-black border-neutral-800'}`}
+          >
+            No
+          </button>
+        </div>
+      </div>
+      <div className="p-4 bg-black border border-neutral-800 rounded-md col-span-1 flex items-end">
+        <button
+          onClick={handleDailyLogSubmit}
+          className="w-full h-full bg-black border border-neutral-800 text-white hover:border-white hover:text-white font-medium rounded-md transition flex items-center justify-center"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
         <div className="mt-10 p-6 rounded-xl bg-black border border-neutral-800">
           <h2 className="text-lg font-semibold mb-4 text-white">Daily Trends</h2>
           <div className="w-full h-96">
@@ -141,7 +227,7 @@ const Dashboard = () => {
 </div>
 
 {/* Download Button */}
-<div className="flex justify-end mb-4">
+<div className="flex justify-end mb-12">
   <button
     onClick={() => {
       const worksheet = XLSX.utils.json_to_sheet(
