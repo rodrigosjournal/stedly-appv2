@@ -1,4 +1,3 @@
-// Full updated file using D3 binary heatmap
 import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import {
   ResponsiveContainer,
@@ -131,7 +130,46 @@ const Dashboard = () => {
 
           {/* Form */}
           <div className="w-full lg:w-[30%] mb-10 lg:mb-0 p-6 rounded-2xl bg-neutral-950 border border-neutral-800 shadow-lg">
-            {/* form content unchanged */}
+            <div className="space-y-6">
+              <div className="flex flex-col">
+                <label className="text-white mb-1">Date</label>
+                <input type="date" value={dailyLog.date} onChange={(e) => setDailyLog({ ...dailyLog, date: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+              </div>
+              <div className="flex flex-col sm:flex-row sm:space-x-4">
+                <div className="flex-1 flex flex-col mb-4 sm:mb-0">
+                  <label className="text-white mb-1">Sleep Start</label>
+                  <input type="time" value={dailyLog.sleepStart} onChange={(e) => setDailyLog({ ...dailyLog, sleepStart: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+                </div>
+                <div className="flex-1 flex flex-col">
+                  <label className="text-white mb-1">Sleep End</label>
+                  <input type="time" value={dailyLog.sleepEnd} onChange={(e) => setDailyLog({ ...dailyLog, sleepEnd: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:space-x-4">
+                <div className="flex-1 flex flex-col mb-4 sm:mb-0">
+                  <label className="text-white mb-1">Work Start</label>
+                  <input type="time" value={dailyLog.workStart} onChange={(e) => setDailyLog({ ...dailyLog, workStart: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+                </div>
+                <div className="flex-1 flex flex-col">
+                  <label className="text-white mb-1">Work End</label>
+                  <input type="time" value={dailyLog.workEnd} onChange={(e) => setDailyLog({ ...dailyLog, workEnd: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <label className="text-white mb-1">Meals</label>
+                <input type="number" placeholder="e.g. 3" value={dailyLog.meals} onChange={(e) => setDailyLog({ ...dailyLog, meals: e.target.value })} className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg" />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-white mb-2">Exercised</label>
+                <div className="flex space-x-4">
+                  <button onClick={() => setDailyLog({ ...dailyLog, exercised: true })} className={`px-6 py-2 rounded-lg border font-medium transition ${dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white hover:bg-neutral-800'}`}>Yes</button>
+                  <button onClick={() => setDailyLog({ ...dailyLog, exercised: false })} className={`px-6 py-2 rounded-lg border font-medium transition ${!dailyLog.exercised ? 'bg-white text-black' : 'bg-black border-white text-white hover:bg-neutral-800'}`}>No</button>
+                </div>
+              </div>
+              <div>
+                <button onClick={handleDailyLogSubmit} className="w-full bg-green-600 text-white px-6 py-3 rounded-xl font-semibold border border-green-700 hover:bg-green-700 transition">Submit</button>
+              </div>
+            </div>
           </div>
 
           {/* Right Column */}
