@@ -1,8 +1,5 @@
-// Dashboard.jsx (Updated Form with Fatigue Tracking Fields)
+// Dashboard.jsx (Vercel Style UI)
 import { useEffect, useState } from 'react';
-import {
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid
-} from 'recharts';
 import { useRouter } from 'next/router';
 import { auth, db } from '../firebase/firebase';
 import {
@@ -23,19 +20,13 @@ const Dashboard = () => {
     exercised: false,
     fatigue_score: '',
     sleep_quality: '',
-    nutrition_score: '',
+    calories: '',
     training_volume: '',
     training_type: '',
     rpe: '',
-    calories: '',
-    protein_intake: '',
-    hydration_liters: '',
     stress_level: '',
-    financial_stress: '',
-    social_interaction: null,
-    screen_time: '',
-    caffeine_mg: '',
-    alcohol_drinks: ''
+    available_balance: '',
+    social_interaction: null
   });
 
   const router = useRouter();
@@ -77,9 +68,8 @@ const Dashboard = () => {
       setDailyLog({
         date: new Date().toISOString().split('T')[0],
         sleepStart: '', sleepEnd: '', workStart: '', workEnd: '', meals: '', exercised: false,
-        fatigue_score: '', sleep_quality: '', nutrition_score: '', training_volume: '', training_type: '',
-        rpe: '', calories: '', protein_intake: '', hydration_liters: '', stress_level: '', financial_stress: '',
-        social_interaction: null, screen_time: '', caffeine_mg: '', alcohol_drinks: ''
+        fatigue_score: '', sleep_quality: '', calories: '', training_volume: '', training_type: '',
+        rpe: '', stress_level: '', available_balance: '', social_interaction: null
       });
       fetchWorkouts(user.uid);
     } catch (err) {
@@ -89,41 +79,35 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans px-6 py-10 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Daily Fatigue Tracking</h1>
-      <div className="space-y-6">
+    <div className="min-h-screen bg-black text-white font-sans px-4 py-10 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-semibold mb-8">Log Daily Fatigue</h1>
+      <div className="space-y-5">
         {Object.entries({
           fatigue_score: 'Fatigue Score (1–10)',
           sleep_quality: 'Sleep Quality (1–10)',
-          nutrition_score: 'Nutrition Quality (1–10)',
+          calories: 'Calories',
           training_volume: 'Training Volume (sets × reps × weight)',
           rpe: 'RPE (1–10)',
-          calories: 'Calories',
-          protein_intake: 'Protein Intake (g)',
-          hydration_liters: 'Hydration (liters)',
           stress_level: 'Stress Level (1–10)',
-          financial_stress: 'Financial Stress (1–10)',
-          screen_time: 'Screen Time (mins)',
-          caffeine_mg: 'Caffeine (mg)',
-          alcohol_drinks: 'Alcoholic Drinks'
+          available_balance: 'Available Balance (EUR/USD/etc.)'
         }).map(([key, label]) => (
-          <div key={key} className="flex flex-col">
-            <label className="text-white mb-1">{label}</label>
+          <div key={key} className="flex flex-col gap-1">
+            <label className="text-sm text-neutral-400">{label}</label>
             <input
               type="number"
               value={dailyLog[key]}
               onChange={(e) => setDailyLog({ ...dailyLog, [key]: e.target.value })}
-              className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+              className="bg-neutral-900 border border-neutral-700 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
         ))}
 
-        <div className="flex flex-col">
-          <label className="text-white mb-1">Training Type</label>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm text-neutral-400">Training Type</label>
           <select
             value={dailyLog.training_type}
             onChange={(e) => setDailyLog({ ...dailyLog, training_type: e.target.value })}
-            className="bg-black border border-neutral-700 text-white px-4 py-2 rounded-lg"
+            className="bg-neutral-900 border border-neutral-700 text-white px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
           >
             <option value="">Select...</option>
             <option value="strength">Strength</option>
@@ -133,16 +117,16 @@ const Dashboard = () => {
           </select>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-white mb-1">Social Interaction (at least one meaningful)</label>
-          <div className="flex space-x-4">
+        <div className="flex flex-col gap-1">
+          <label className="text-sm text-neutral-400">Social Interaction</label>
+          <div className="flex gap-3">
             <button
               onClick={() => setDailyLog({ ...dailyLog, social_interaction: 1 })}
-              className={`px-6 py-2 rounded-lg border font-medium transition ${dailyLog.social_interaction === 1 ? 'bg-white text-black' : 'bg-black border-white text-white hover:bg-neutral-800'}`}
+              className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${dailyLog.social_interaction === 1 ? 'bg-white text-black' : 'bg-neutral-900 border-white text-white hover:bg-neutral-800'}`}
             >Yes</button>
             <button
               onClick={() => setDailyLog({ ...dailyLog, social_interaction: 0 })}
-              className={`px-6 py-2 rounded-lg border font-medium transition ${dailyLog.social_interaction === 0 ? 'bg-white text-black' : 'bg-black border-white text-white hover:bg-neutral-800'}`}
+              className={`px-4 py-2 rounded-lg border text-sm font-medium transition ${dailyLog.social_interaction === 0 ? 'bg-white text-black' : 'bg-neutral-900 border-white text-white hover:bg-neutral-800'}`}
             >No</button>
           </div>
         </div>
